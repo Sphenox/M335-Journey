@@ -11,7 +11,7 @@ if ($db->connect_error) {
     die("Connection failed: " . $db->connect_error);
 }
 
-$createDB = "CREATE DATABASE IF EXISTS journey";
+$createDB = "CREATE DATABASE IF NOT EXISTS journey";
 
 if ($db->query($createDB) === TRUE) {
     $db->query("USE journey");
