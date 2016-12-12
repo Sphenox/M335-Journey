@@ -1,19 +1,21 @@
 {
   "name": "Mustermann",
-  "prename":"Max",
-  "description": "Dies ist die Beschreibung des Users, hier kann drin sein was will",
+  "prename": "Max",
   "userImage": "/PATH/TO/IMG",
   "friends": [
     {
-      "name": "Friendusername1",
+      "name": "Mustermann",
+      "prename": "Max",
       "userImage": "/PATH/TO/IMG"
     },
     {
-      "name": "Friendusername1",
+      "name": "Mustermann",
+      "prename": "Max",
       "userImage": "/PATH/TO/IMG"
     },
     {
-      "name": "Friendusername1",
+      "name": "Mustermann",
+      "prename": "Max",
       "userImage": "/PATH/TO/IMG"
     }
   ],
@@ -22,18 +24,21 @@
       "lat": "-41.082791",
       "lng": "8.9823719",
       "image": "/PATH/TO/IMG",
+      "createdAt": "2016-05-12 12:00",
       "comment": "Dies ist die Beschreibung des Bildes, hier kann drinn stehen was will"
     },
     {
       "lat": "-41.082791",
       "lng": "8.9823719",
       "image": "/PATH/TO/IMG",
+      "createdAt": "2016-05-12 12:00",
       "comment": "Dies ist die Beschreibung des Bildes, hier kann drinn stehen was will"
     },
     {
       "lat": "-41.082791",
       "lng": "8.9823719",
       "image": "/PATH/TO/IMG",
+      "createdAt": "2016-05-12 12:00",
       "comment": "Dies ist die Beschreibung des Bildes, hier kann drinn stehen was will"
     }
   ]

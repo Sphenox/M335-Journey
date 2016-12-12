@@ -3,5 +3,6 @@
   "name": "Mustermann",
   "prename": "Max",
   "password": "xyz123HighFive",
-  "password_repeat": "xyz123HighFive"
+  "password_repeat": "xyz123HighFive",
+  "userImage": "/PATH/TO/IMG"
 }
