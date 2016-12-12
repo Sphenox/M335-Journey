@@ -19,6 +19,7 @@ if ($db->query($createDB) === TRUE) {
     $DBusers = "CREATE TABLE `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(50) COLLATE utf8_bin NOT NULL,
+  `prename` varchar(50) COLLATE utf8_bin NOT NULL,
   `email` varchar(255) COLLATE utf8_bin NOT NULL,
   `password` varchar(255) COLLATE utf8_bin NOT NULL,
   `description` text COLLATE utf8_bin,
@@ -26,12 +27,13 @@ if ($db->query($createDB) === TRUE) {
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin";
 
-    $DBlocations  = "CREATE TABLE `locations` (
+    $DBlocations = "CREATE TABLE `locations` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `lat` varchar(255) COLLATE utf8_bin NOT NULL,
   `lng` varchar(255) COLLATE utf8_bin NOT NULL,
   `image` varchar(255) COLLATE utf8_bin NOT NULL,
   `comment` text COLLATE utf8_bin,
+  `createdAt` datetime COLLATE utf8_bin NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `visible` enum('all','friends','none') COLLATE utf8_bin NOT NULL DEFAULT 'all',
   `FKuser` int(11) NOT NULL,
   PRIMARY KEY (`id`)
@@ -45,13 +47,13 @@ if ($db->query($createDB) === TRUE) {
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin";
 
 
-    if($db->query($DBusers ) !== TRUE) {
+    if ($db->query($DBusers) !== TRUE) {
         die("Users Tabelle konnte nicht erstellt werden");
     }
-    if($db->query($DBlocations  ) !== TRUE) {
+    if ($db->query($DBlocations) !== TRUE) {
         die("Locations Tabelle konnte nicht erstellt werden");
     }
-    if($db->query($DBfriends) !== TRUE) {
+    if ($db->query($DBfriends) !== TRUE) {
         die("Friends Tabelle konnte nicht erstellt werden");
     }
 

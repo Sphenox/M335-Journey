@@ -1,0 +1,7 @@
+{
+  "email": "test@test.ch",
+  "name": "Mustermann",
+  "prename": "Max",
+  "password": "xyz123HighFive",
+  "password_repeat": "xyz123HighFive"
+}
