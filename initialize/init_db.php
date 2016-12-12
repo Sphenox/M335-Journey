@@ -11,47 +11,47 @@ if ($db->connect_error) {
     die("Connection failed: " . $db->connect_error);
 }
 
-$create_db = "CREATE DATABASE IF EXISTS journey";
+$createDB = "CREATE DATABASE IF EXISTS journey";
 
-if ($db->query($create_db) === TRUE) {
+if ($db->query($createDB) === TRUE) {
     $db->query("USE journey");
 
-    $db_users = "CREATE TABLE `users` (
+    $DBusers = "CREATE TABLE `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(50) COLLATE utf8_bin NOT NULL,
   `email` varchar(255) COLLATE utf8_bin NOT NULL,
   `password` varchar(255) COLLATE utf8_bin NOT NULL,
   `description` text COLLATE utf8_bin,
-  `user_image` varchar(255) COLLATE utf8_bin DEFAULT NULL,
+  `userImage` varchar(255) COLLATE utf8_bin DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin";
 
-    $db_locations  = "CREATE TABLE `locations` (
+    $DBlocations  = "CREATE TABLE `locations` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `lat` varchar(255) COLLATE utf8_bin NOT NULL,
   `lng` varchar(255) COLLATE utf8_bin NOT NULL,
   `image` varchar(255) COLLATE utf8_bin NOT NULL,
   `comment` text COLLATE utf8_bin,
   `visible` enum('all','friends','none') COLLATE utf8_bin NOT NULL DEFAULT 'all',
-  `FK_user` int(11) NOT NULL,
+  `FKuser` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin";
 
-    $db_friends = "CREATE TABLE `friends` (
+    $DBfriends = "CREATE TABLE `friends` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `FK_user_1` int(11) NOT NULL,
-  `FK_user_2` int(11) NOT NULL,
+  `FKuser1` int(11) NOT NULL,
+  `FKuser2` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin";
 
 
-    if($db->query($db_users) !== TRUE) {
+    if($db->query($DBusers ) !== TRUE) {
         die("Users Tabelle konnte nicht erstellt werden");
     }
-    if($db->query($db_locations) !== TRUE) {
+    if($db->query($DBlocations  ) !== TRUE) {
         die("Locations Tabelle konnte nicht erstellt werden");
     }
-    if($db->query($db_friends) !== TRUE) {
+    if($db->query($DBfriends) !== TRUE) {
         die("Friends Tabelle konnte nicht erstellt werden");
     }
 
