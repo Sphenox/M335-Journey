@@ -56,6 +56,7 @@ if ($db->query($create_db) === TRUE) {
     }
 
     echo "Alle Tabellen wurden korrekt eingerichtet.";
+    $db->close();
 }
 else {
     die("DB konnte nicht erstellt werden.");
