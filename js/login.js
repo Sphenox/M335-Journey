@@ -10,16 +10,18 @@ journeyApp.controller('LoginFormController', function($scope, $http) {
                 password: $('#password').val()
             }
         });
-        request.success = function(response) {
-            if (response.status == 1) {
-                window.location = './dashboard.html';
-            } else {
-                Materialize.toast('Username or password are wrong!', 4000);
+        request.then(
+            function successCallback(response) {
+                if (response.data.status == 1) {
+                    window.location = './dashboard.html';
+                } else {
+                    Materialize.toast('Username or password are wrong!', 4000);
+                }
+            },
+            function errorCallback(response) {
+                Materialize.toast('Ups something went wrong! Errormessage: ' + response.statusText, 4000);
             }
-        }
-        request.error = function(response) {
-            Materialize.toast('Ups something went wrong! Errormessage: ' + response.statusText, 4000);
-        }
+        );
     }
     $scope.register = function() {
         window.location = './registration.html';

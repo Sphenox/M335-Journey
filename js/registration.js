@@ -12,15 +12,17 @@ journeyApp.controller('RegistrationFormController', function($scope, $http) {
                 password: $('#password').val()
             }
         });
-        request.success = function(response) {
-            if (response.status == 1) {
-                window.location = './dashboard.html';
-            } else {
+        request.then(
+            function successCallback(response) {
+                if (response.data.status == 1) {
+                    window.location = './dashboard.html';
+                } else {
+                    Materialize.toast('Ups something went wrong! Errormessage: ' + response.data.statusText, 4000);
+                }
+            },
+            function errorCallback(response) {
                 Materialize.toast('Ups something went wrong! Errormessage: ' + response.statusText, 4000);
             }
-        }
-        request.error = function(response) {
-            Materialize.toast('Ups something went wrong! Errormessage: ' + response.statusText, 4000);
-        }
+        );
     }
 });
