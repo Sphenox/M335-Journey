@@ -1,28 +1,4 @@
 {
-  "id": "298",
-  "name": "Mustermann",
-  "prename": "Max",
-  "userImage": "/PATH/TO/IMG",
-  "friends": [
-    {
-      "id": "298",
-      "name": "Mustermann",
-      "prename": "Max",
-      "userImage": "/PATH/TO/IMG"
-    },
-    {
-      "id": "298",
-      "name": "Mustermann",
-      "prename": "Max",
-      "userImage": "/PATH/TO/IMG"
-    },
-    {
-      "id": "298",
-      "name": "Mustermann",
-      "prename": "Max",
-      "userImage": "/PATH/TO/IMG"
-    }
-  ],
   "uploads": [
     {
       "id": "298",
