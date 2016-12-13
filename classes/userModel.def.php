@@ -69,9 +69,6 @@ class UserModel {
 
     public function newUser($userInput) {
         $userInput = json_decode($userInput);
-        echo '<pre>';
-        print_r($userInput);
-        echo '</pre>';
     }
 
 }
