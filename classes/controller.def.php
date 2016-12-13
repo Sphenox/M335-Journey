@@ -26,9 +26,16 @@ class Controller {
                     $this->response = json_encode($user);
                     break;
                 case 'registration':
+                    require_once('classes' . DIRECTORY_SEPARATOR . 'userModel.def.php');
+                    $userInput = file_get_contents('php://input');
+                    $userModel = new UserModel();
+                    $userModel->newUser($userInput);
+
+
+
                     $this->response = '{
                                    "status":"1",
-                                   "statusText":"REGISCHTRATION IST FERTISCH, NE";
+                                   "statusText":"REGISCHTRATION IST FERTISCH, NE"
                                  }';
                     break;
                 default:
