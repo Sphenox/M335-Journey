@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="de" ng-app="journeyApp">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <!--Import Google Icon Font-->
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href="../vendor/materialize/css/materialize.min.css" media="screen,projection" />
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!--Import jQuery-->
+    <script type="text/javascript" src="../vendor/jquery/jquery-3.1.1.min.js"></script>
+    <!--Import materialize.js-->
+    <script type="text/javascript" src="../vendor/materialize/js/materialize.min.js"></script>
+    <!--Import AngularJs -->
+    <script type="text/javascript" src="../vendor/angularjs/angular.min.js"></script>
+    <!--Import custom JS -->
+    <script type="text/javascript" src="../js/login.js"></script>
+</head>
+
+<body>
+    <div id="login-form-wrapper" class="row" ng-controller="LoginFormController">
+        <form id="login-form" class="col s12" ng-submit="submit()">
+            <h3 class="center-align blue-text">Journey</h3>
+            <div class="row">
+                <div class="input-field col s12">
+                    <input id="email" type="email" class="validate" required>
+                    <label for="email">Email</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <input id="password" type="password" class="validate" required>
+                    <label for="password">Password</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <a id="register" class="btn grey white-text waves-effect waves-light" value="register" ng-click="register()">Register</a>
+                    <button id="login" class="btn blue white-text waves-effect waves-light" type="submit">Login
+                        <i class="material-icons right">send</i>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</body>
+
+</html>
