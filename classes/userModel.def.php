@@ -34,6 +34,7 @@ class UserModel {
         foreach($result[0] as $field => $data) {
             $user->$field = $data;
         }
+
         return $user;
     }
 
@@ -42,8 +43,19 @@ class UserModel {
         require_once ('classes' . DIRECTORY_SEPARATOR . 'locationModel.def.php');
         $locModel = new LocationModel();
         $user->journeys = $locModel->getLocationsFromUser($id);
-
+        //$user->friends = getFriends($id);
+        //$user->favorites =
         $this->user = $user;
+    }
+
+    public function getFriends($id){
+        $result = Database::getDB()->query();
+    }
+
+
+    public function newUser() {
+        
+
     }
 
 }
