@@ -1,31 +1,30 @@
 {
-  "uploads": [
-    {
-      "id": "298",
-      "lat": "-41.082791",
-      "lng": "8.9823719",
-      "image": "/PATH/TO/IMG",
-      "createdAt": "2016-05-12 12:00",
-      "comment": "Dies ist die Beschreibung des Bildes, hier kann drinn stehen was will",
-      "favorite": "true"
-    },
-    {
-      "id": "298",
-      "lat": "-41.082791",
-      "lng": "8.9823719",
-      "image": "/PATH/TO/IMG",
-      "createdAt": "2016-05-12 12:00",
-      "comment": "Dies ist die Beschreibung des Bildes, hier kann drinn stehen was will",
-      "favorite": "true"
-    },
-    {
-      "id": "298",
-      "lat": "-41.082791",
-      "lng": "8.9823719",
-      "image": "/PATH/TO/IMG",
-      "createdAt": "2016-05-12 12:00",
-      "comment": "Dies ist die Beschreibung des Bildes, hier kann drinn stehen was will",
-      "favorite": "true"
-    }
-  ]
+    "uploads": [{
+            "id": "298",
+            "lat": "-41.082791",
+            "lng": "8.9823719",
+            "image": "298",
+            "createdAt": "2016-05-12 12:00",
+            "comment": "Dies ist die Beschreibung des Bildes, hier kann drinn stehen was will",
+            "favorite": "true"
+        },
+        {
+            "id": "298",
+            "lat": "-41.082791",
+            "lng": "8.9823719",
+            "image": "298",
+            "createdAt": "2016-05-12 12:00",
+            "comment": "Dies ist die Beschreibung des Bildes, hier kann drinn stehen was will",
+            "favorite": "true"
+        },
+        {
+            "id": "298",
+            "lat": "-41.082791",
+            "lng": "8.9823719",
+            "image": "298",
+            "createdAt": "2016-05-12 12:00",
+            "comment": "Dies ist die Beschreibung des Bildes, hier kann drinn stehen was will",
+            "favorite": "true"
+        }
+    ]
 }
