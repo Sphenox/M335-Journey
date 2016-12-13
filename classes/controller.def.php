@@ -20,6 +20,10 @@ class Controller {
                 case 'showUser':
                     require_once('classes' . DIRECTORY_SEPARATOR . 'userModel.def.php');
                     $userModel = new UserModel('{"id":"1"}', true);
+                    $user = $userModel->getUser();
+                    $user['status'] = '1';
+                    $user['statusText'] = 'Fuck that';
+                    $this->response = json_encode($user);
                     break;
                 case 'registration':
                     $this->response = '{

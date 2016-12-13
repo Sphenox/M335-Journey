@@ -13,12 +13,14 @@ class LocationModel {
 
     public function getLocationsFromUser($userId) {
         $result = Database::getDB()->query("SELECT * FROM locations WHERE FKuser = ".$userId);
-
+        $locations = [];
         foreach ($result as $location) {
             $locationObj = new Location();
             foreach ($location as $field => $data) {
-
+                $locationObj->$field = $data;
             }
+            $locations[] = $locationObj;
         }
+        return $locations;
     }
 }

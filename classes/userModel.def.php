@@ -9,7 +9,14 @@
 require_once ('classes' . DIRECTORY_SEPARATOR . 'user.def.php');
 class UserModel {
 
-    private $users = [];
+    private $user;
+
+    /**
+     * @return array
+     */
+    public function getUser() {
+        return get_object_vars($this->user);
+    }
 
     public function __construct($json, $fullUser = false) {
         $jsonObj= json_decode($json);
@@ -20,7 +27,7 @@ class UserModel {
         }
     }
 
-    protected function getUser($id) {
+    protected function getOnlyUser($id) {
         $user = new User();
         //TODO: PROCEDURE einbauen
         $result = Database::getDB()->query('SELECT * FROM users WHERE id = '.$id);
@@ -31,10 +38,12 @@ class UserModel {
     }
 
     public function getFullUser($id) {
-        $this->getUser($id);
+        $user = $this->getOnlyUser($id);
         require_once ('classes' . DIRECTORY_SEPARATOR . 'locationModel.def.php');
         $locModel = new LocationModel();
+        $user->journeys = $locModel->getLocationsFromUser($id);
 
+        $this->user = $user;
     }
 
 }
