@@ -13,7 +13,10 @@ class Controller {
     public function __construct($GET) {
         if (isset($GET['action'])) {
             switch ($GET['action']) {
-
+                case 'showUser':
+                    require_once('classes' . DIRECTORY_SEPARATOR . 'userModel.def.php');
+                    $userModel = new UserModel('{"id":"1"}');
+                    break;
             }
         }
 
