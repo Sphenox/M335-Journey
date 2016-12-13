@@ -15,7 +15,7 @@ journeyApp.controller('RegistrationFormController', function($scope, $http) {
         request.then(
             function successCallback(response) {
                 if (response.data.status == 1) {
-                    //window.location = './dashboard.html';
+                    window.location = './dashboard.html';
                 } else {
                     Materialize.toast('Ups something went wrong! Errormessage: ' + response.data.statusText, 4000);
                 }
