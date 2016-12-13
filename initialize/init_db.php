@@ -46,6 +46,13 @@ if ($db->query($createDB) === TRUE) {
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin";
 
+    $DBfavorites = "CREATE TABLE `favorites` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `FKuser` int(11) NOT NULL,
+  `FKlocation` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin";
+
 
     if ($db->query($DBusers) !== TRUE) {
         die("Users Tabelle konnte nicht erstellt werden");
@@ -56,6 +63,10 @@ if ($db->query($createDB) === TRUE) {
     if ($db->query($DBfriends) !== TRUE) {
         die("Friends Tabelle konnte nicht erstellt werden");
     }
+    if ($db->query($DBfavorites) !== TRUE) {
+        die("Favorites Tabelle konnte nicht erstellt werden");
+    }
+
 
     echo "Alle Tabellen wurden korrekt eingerichtet.";
     $db->close();
