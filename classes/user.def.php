@@ -7,13 +7,14 @@
  * Time: 11:44
  */
 class User {
-    private $id;
-    private $name;
-    private $prename;
-    private $email;
-    private $password;
-    private $description;
-    private $userImage;
-    private $friends;
-    private $favorites;
+    public $id;
+    public $name;
+    public $prename;
+    public $email;
+    public $password;
+    public $description;
+    public $userImage;
+    public $journeys;
+    public $friends;
+    public $favorites;
 }

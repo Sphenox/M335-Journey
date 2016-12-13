@@ -15,7 +15,9 @@ class Controller {
             switch ($GET['action']) {
                 case 'showUser':
                     require_once('classes' . DIRECTORY_SEPARATOR . 'userModel.def.php');
-                    $userModel = new UserModel('{"id":"1"}');
+                    $userModel = new UserModel('{"id":"1"}',true);
+                    break;
+                default:
                     break;
             }
         }

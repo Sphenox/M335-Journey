@@ -11,20 +11,30 @@ class UserModel {
 
     private $users = [];
 
-    public function __construct($json) {
+    public function __construct($json, $fullUser = false) {
         $jsonObj= json_decode($json);
         if(is_object($jsonObj)){
-            $this->getUser($jsonObj->id);
+            if($fullUser){
+                $this->getFullUser($jsonObj->id);
+            }
         }
     }
 
-    public function getUser($id) {
+    protected function getUser($id) {
         $user = new User();
         //TODO: PROCEDURE einbauen
-        $data = Database::getDB()->query('SELECT * FROM users WHERE id = '.$id);
-        echo '<pre>';
-        print_r($user);
-        echo '</pre>';
+        $result = Database::getDB()->query('SELECT * FROM users WHERE id = '.$id);
+        foreach($result[0] as $field => $data) {
+            $user->$field = $data;
+        }
+        return $user;
+    }
+
+    public function getFullUser($id) {
+        $this->getUser($id);
+        require_once ('classes' . DIRECTORY_SEPARATOR . 'locationModel.def.php');
+        $locModel = new LocationModel();
+
     }
 
 }

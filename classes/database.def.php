@@ -48,7 +48,7 @@ class Database {
      * @return array|bool|mixed
      */
     public function query($sqlstr) {
-        $db_array = array();
+        $db_array = [];
         if (!empty($sqlstr)) {
             $result = $this->mysqliObj->query($sqlstr);
             if (is_object($result)) {

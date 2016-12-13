@@ -8,12 +8,12 @@
  */
 class Location {
 
-    private $id;
-    private $lat;
-    private $lng;
-    private $imagePath;
-    private $comment;
-    private $createdAt;
-    private $visible;
-    private $FKuser;
+    public $id;
+    public $lat;
+    public $lng;
+    public $imagePath;
+    public $comment;
+    public $createdAt;
+    public $visible;
+    public $FKuser;
 }
