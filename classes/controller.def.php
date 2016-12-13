@@ -9,15 +9,29 @@
 class Controller {
 
     private $model;
+    private $response = '{
+                                   "status":"1",
+                                   "statusText":"OKI DOKI"
+                                 }';
 
     public function __construct($GET) {
         if (isset($GET['action'])) {
             switch ($GET['action']) {
                 case 'showUser':
                     require_once('classes' . DIRECTORY_SEPARATOR . 'userModel.def.php');
-                    $userModel = new UserModel('{"id":"1"}',true);
+                    $userModel = new UserModel('{"id":"1"}', true);
+                    break;
+                case 'registration':
+                    $this->response = '{
+                                   "status":"1",
+                                   "statusText":"REGISCHTRATION IST FERTISCH, NE";
+                                 }';
                     break;
                 default:
+                    $this->response = '{
+                                   "status":"1",
+                                   "statusText":"OKI DOKI"
+                                 }';
                     break;
             }
         }
@@ -26,10 +40,7 @@ class Controller {
 
     public function display() {
 
-        return '{
-  "status":"1",
-  "statusText":"OKI DOKI"
-}';
+        return $this->response;
     }
 
 
