@@ -20,7 +20,23 @@ class Controller {
             switch ($GET['action']) {
                 case 'showUser':
                     require_once('classes' . DIRECTORY_SEPARATOR . 'userModel.def.php');
-                    $userModel = new UserModel('{"id":"1"}', true);
+                    //TODO: USer selection
+//                    if(empty(file_get_contents('php://input')) && isset($_SESSION['userid'])){
+//                        $userId = $_SESSION['userid'];
+//                    }
+//                    else if (!empty(file_get_contents('php://input'))) {
+//                        $json = json_decode(file_get_contents('php://input'));
+//                        if(isset($json->id) && intval($json->id)){
+//                            $userId = $json->id;
+//                        }
+//                    }
+//                    else {
+//                        //TODO: response status 0 zurückegeben
+//                        $this->response['status'] = '0';
+//                        $this->response['statustext'] = 'No User selected';
+//                        break;
+//                    }
+                    $userModel = new UserModel('1', true);
                     $user = $userModel->getUser();
                     $user['status'] = '1';
                     $user['statusText'] = '';

@@ -27,11 +27,10 @@ class UserModel {
      * @param string $json
      * @param bool $fullUser
      */
-    public function __construct($json = '', $fullUser = false) {
-        $jsonObj = json_decode($json);
-        if (is_object($jsonObj) && isset($jsonObj->id)) {
+    public function __construct($userId, $fullUser = false) {;
+        if (isset($userId)) {
             if ($fullUser) {
-                $this->getFullUser($jsonObj->id);
+                $this->getFullUser($userId);
             }
         }
     }
@@ -107,7 +106,7 @@ class UserModel {
         $userInput = json_decode($userInput);
         if(isset($userInput->email) && isset($userInput->password) ){
             $email = Database::getDB()->escape($userInput->email);
-            $password = Database::getDB()->escape(md5($userInput->password));
+            $password = hash('sha512',$userInput->password);
             $result = Database::getDB()->query('CALL checkUserLogin(\''.$email.'\',\''.$password.'\')');
             if(intval($result[0]['id']) != 0 || intval($result[0]['id']) != -1){
                 $_SESSION["userId"] = $result[0]['id'];
