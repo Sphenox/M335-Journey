@@ -20,7 +20,16 @@ BEGIN
 	WHERE loc.FKuser = u.id
 	AND u.id = inId;
 END //
-CREATE PROCEDURE getVisibleLocation
+#no nid fertig
+CREATE PROCEDURE getAllVisibleLocation
+(IN inId INT(11), IN visibility VARCHAR(10))
+BEGIN
+	SELECT loc.* FROM journey.users as u , journey.locations as loc
+	WHERE loc.FKuser = u.id
+	AND u.id = inId;
+END //
+#no nid fertig
+CREATE PROCEDURE getFriendsVisibleLocation
 (IN inId INT(11), IN visibility VARCHAR(10))
 BEGIN
 	SELECT loc.* FROM journey.users as u , journey.locations as loc
@@ -28,10 +37,10 @@ BEGIN
 	AND u.id = inId;
 END //
 CREATE PROCEDURE getUser
-(IN email VARCHAR(255), IN password VARCHAR(255))
+(IN inEmail VARCHAR(255), IN inPassword VARCHAR(255))
 BEGIN
-	SELECT loc.* FROM journey.users as u , journey.locations as loc
-	WHERE loc.FKuser = u.id
-	AND u.id = inId;
+	SELECT u.* FROM journey.users as u
+	WHERE u.email = inEmail
+	AND u.password = inPassword
 END //
 DELIMITER ;
