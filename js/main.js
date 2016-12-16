@@ -6,6 +6,7 @@ $(document).ready(function() {
         closeOnClick: true,
         draggable: true
     });
+    $('.modal').modal();
 
 });
 var journeyApp = new angular.module('journeyApp', []);
@@ -68,7 +69,22 @@ journeyApp.controller('AllPicturesController', function($scope, $http) {
         }
     ];
 
-    $scope.openImage = function(id) {
-        console.log(id);
+    $scope.openImage = function(card) {
+        /*$http.get('../services.php?action=getJourney', function(response) {
+            if (response.status == 1 && response.data.status == 1) {
+                $('#modal-id').val(response.data.id);
+                $('#modal-comment').text(response.data.comment);
+                $('#modal-image').attr('src', response.data.image);
+                $('#imageView').modal('open');
+            } else {
+                Materialize.toast('Ups something went wrong! Couldn\'t load pictures.', 4000);
+                return false;
+            }
+        });*/
+
+        $('#modal-id').val(1243);
+        $('#modal-comment').text('irgend ein Text');
+        $('#modal-image').attr('src', '../img/298.jpg');
+        $('#imageView').modal('open');
     };
 });
