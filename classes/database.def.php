@@ -43,6 +43,10 @@ class Database {
         }
     }
 
+    public function __destruct() {
+        $this->mysqliObj->close();
+    }
+
     /**
      * @param $sqlstr
      * @return array|bool|mixed
@@ -51,13 +55,14 @@ class Database {
         $db_array = [];
         if (!empty($sqlstr)) {
             $result = $this->mysqliObj->query($sqlstr);
+            $this->mysqliObj->next_result();
             if (is_object($result)) {
                 while ($row = $result->fetch_assoc()) {
                     $db_array[] = $row;
                 }
+                mysqli_free_result($result);
                 return $db_array;
             }
-
         }
         return false;
     }

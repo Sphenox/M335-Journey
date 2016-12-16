@@ -11,9 +11,6 @@ Insert into journey.locations (lat , lng ,image , comment, createdAt ,visible ,F
 Insert into journey.locations (lat , lng ,image , comment, createdAt ,visible ,FKuser) VALUES ("62.454646551" , "16.5641434" , "4" , "f", CURTIME(), "all" ,  2);
 Insert into journey.locations (lat , lng ,image , comment, createdAt ,visible ,FKuser) VALUES ("62.454646551" , "16.5641434" , "5" , "f", CURTIME(), "none" ,  3);
 
-INSERT into journey.friends (FKuser1 , FKuser2) VALUES (1,2);
-INSERT into journey.friends (FKuser1 , FKuser2) VALUES (2,3);
-
 INSERT into journey.favorites (FKuser , FKlocation) VALUES (1,1);
 INSERT into journey.favorites (FKuser , FKlocation) VALUES (2,1);
 INSERT into journey.favorites (FKuser , FKlocation) VALUES (3,1);

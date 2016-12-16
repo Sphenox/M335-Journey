@@ -7,6 +7,9 @@
  * Time: 13:14
  */
 require_once('classes' . DIRECTORY_SEPARATOR . 'user.def.php');
+require_once('classes' . DIRECTORY_SEPARATOR . 'friends.def.php');
+require_once('classes' . DIRECTORY_SEPARATOR . 'favorites.def.php');
+require_once('classes' . DIRECTORY_SEPARATOR . 'locationModel.def.php');
 
 class UserModel {
 
@@ -53,17 +56,12 @@ class UserModel {
      */
     public function getFullUser($id) {
         $user = $this->getOnlyUser($id);
-        require_once('classes' . DIRECTORY_SEPARATOR . 'locationModel.def.php');
         $locModel = new LocationModel();
         $user->journeys = $locModel->getLocationsFromUser($id);
-        //$user->friends = getFriends($id);
-        //$user->favorites =
+        $user->friends = Friends::getFriendsFromID($id);
+        $user->favorites = Favorites::getFavoritesFromId($id);
         $this->user = $user;
 
-    }
-
-    public function getFriends($id) {
-        $result = Database::getDB()->query();
     }
 
 

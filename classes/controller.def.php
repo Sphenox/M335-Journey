@@ -38,6 +38,18 @@ class Controller {
                                    "statusText":"REGISCHTRATION IST FERTISCH, NE"
                                  }';
                     break;
+                case 'login':
+                    $this->response = '{
+                                   "status":"1",
+                                   "statusText":"LOGIN IST FERTISCH, NE"
+                                 }';
+                    break;
+                case 'logout':
+                    $this->response = '{
+                                   "status":"1",
+                                   "statusText":"LOGOUT IST FERTISCH, NE"
+                                 }';
+                    break;
                 default:
                     $this->response = '{
                                    "status":"1",
