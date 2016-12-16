@@ -15,9 +15,13 @@ class Controller {
                                  }';
 
     public function __construct($GET) {
+        session_start();
         if (isset($GET['action'])) {
             switch ($GET['action']) {
                 case 'showUser':
+                    echo '<pre>';
+                    print_r($_SESSION);
+                    echo '</pre>';
                     require_once('classes' . DIRECTORY_SEPARATOR . 'userModel.def.php');
                     $userModel = new UserModel('{"id":"1"}', true);
                     $user = $userModel->getUser();
@@ -36,9 +40,10 @@ class Controller {
                     $this->response = json_encode($userModel->userLogin(file_get_contents('php://input')));
                     break;
                 case 'logout':
+                    session_unset();
                     $this->response = '{
                                    "status":"1",
-                                   "statusText":"LOGOUT IST FERTISCH, NE"
+                                   "statusText":"User is logged out now."
                                  }';
                     break;
                 default:

@@ -61,7 +61,6 @@ class UserModel {
         $user->friends = Friends::getFriendsFromID($id);
         $user->favorites = Favorites::getFavoritesFromId($id);
         $this->user = $user;
-
     }
 
     /**
@@ -72,7 +71,7 @@ class UserModel {
         $userInput = json_decode($userInput);
         // Wurden alle nötigen daten uebergeben?
         if (isset($userInput->email) && isset($userInput->password) && isset($userInput->name) && isset($userInput->prename)) {
-            if ($this->emailInUse($userInput->email)) {
+            if (!$this->emailInUse($userInput->email)) {
                 $return['status'] = '0';
                 $return['statusText'] = 'This email is already in use.';
                 return $return;
@@ -100,16 +99,23 @@ class UserModel {
      * @return bool
      */
     public function emailInUse($email) {
-        //TODO: email check
-        return false;
+        $result = Database::getDB()->query('CALL checkIfEmailExist(\''.$email.'\');');
+        echo '<pre>';
+        print_r($result);
+        echo '</pre>';
+        return $result[0]['emailCheck'];
     }
 
     public function userLogin($userInput) {
         $userInput = json_decode($userInput);
         if(isset($userInput->email) && isset($userInput->password) ){
-            if(false){
+            $email = Database::getDB()->escape($userInput->email);
+            $password = Database::getDB()->escape(md5($userInput->password));
+            $result = Database::getDB()->query('CALL checkUserLogin(\''.$email.'\',\''.$password.'\')');
+            if(intval($result[0]['id']) != 0 || intval($result[0]['id']) != -1){
+                $_SESSION["userId"] = $result[0]['id'];
                 $return['status'] = '1';
-                $return['statusText'] = '';
+                $return['statusText'] = 'Successfull login.';
             }
             else {
                 $return['status'] = '0';
@@ -120,8 +126,6 @@ class UserModel {
             $return['status'] = '0';
             $return['statusText'] = 'The transferred data is not correct.';
         }
-
-
         return $return;
     }
 

@@ -116,7 +116,7 @@ class Database {
             $valuestr = '(';
             foreach ($values as $row => $value) {
                 $rowstr .= $row . ',';
-                $valuestr .= '\'' . $value . '\',';
+                $valuestr .= '\'' . self::escape($value) . '\',';
             }
             $sqlstr .= trim($rowstr, ",") . ') VALUES ';
             $sqlstr .= trim($valuestr, ",") . ');';
@@ -128,5 +128,8 @@ class Database {
         return false;
     }
 
+    public function escape($toEscape) {
+        return $this->mysqliObj->escape_string($toEscape);
+    }
 
 }

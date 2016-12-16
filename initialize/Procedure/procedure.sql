@@ -39,16 +39,16 @@ SELECT loc.* FROM journey.users as u , journey.locations as loc
 END //
 #Goht no nid
 CREATE PROCEDURE checkUserLogin
-(IN inEmail VARCHAR(255), IN inPassword VARCHAR(255) , OUT outID INT(11))
+(IN inEmail VARCHAR(255), IN inPassword VARCHAR(255))
 BEGIN
-	SELECT IF(COUNT(u.*) > 0 , 'true' , 'false') , u.id INTO outID FROM journey.users as u
+	SELECT u.id FROM journey.users as u
 	WHERE u.email = inEmail
 	AND u.password = inPassword;
 END //
 CREATE PROCEDURE checkIfEmailExist
 (IN inEmail VARCHAR(255))
 BEGIN
-	SELECT IF(COUNT(u.*) > 0 , 'true' , 'false') FROM journey.users as u
+	SELECT IF(COUNT(u.*) > 0 , 'true' , 'false') as check FROM journey.users as u
 	WHERE u.email = inEmail;
 END //
 DELIMITER ;
