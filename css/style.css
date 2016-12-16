@@ -6,7 +6,8 @@
     width: 10%;
 }
 
-#allPictures-wrapper {
+#allPictures-wrapper,
+#allPlaces-wrapper {
     height: auto;
     width: 100%;
     display: block;
