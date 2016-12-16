@@ -37,7 +37,7 @@ SELECT loc.* FROM journey.users as u , journey.locations as loc
 	AND ((loc.FKuser = u.id)
 	OR (loc.visible = "friends" AND loc.FKuser IN (SELECT u.id FROM journey.users as u RIGHT JOIN journey.friends as f ON ((inId = f.FKuser1 AND f.FKuser2 = u.id ) OR ( inId = f.Fkuser2 AND f.FKuser1 = u.id));
 END //
-#Goht no nid so
+#Goht no nid
 CREATE PROCEDURE checkUserLogin
 (IN inEmail VARCHAR(255), IN inPassword VARCHAR(255))
 BEGIN
