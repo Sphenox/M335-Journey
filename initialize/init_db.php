@@ -69,7 +69,29 @@ if ($db->query($createDB) === TRUE) {
 
 
     echo "Alle Tabellen wurden korrekt eingerichtet.";
-    $db->close();
+
+    // Das Ganze insert File in die DB einspielen.
+    $lines = file('initialize/Insert/insert.sql');
+    $sqlStmnt = '';
+    foreach ($lines as $line) {
+        // Falls es ein Kommentar oder eine Leere Zeile ist
+        if (substr($line, 0, 2) == '--' || $line == '') {
+            continue;
+        }
+
+        $sqlStmnt .= $line;
+
+        // Falls die Linie ein ; am schluss hat, den befehl ausführen.
+        if (substr(trim($line), -1, 1) == ';') {
+            $db->query($sqlStmnt);
+
+            $sqlStmnt = '';
+        }
+    }
+}
+
+
+$db->close();
 }
 else {
     die("DB konnte nicht erstellt werden.");

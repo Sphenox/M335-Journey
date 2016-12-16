@@ -19,15 +19,16 @@ class Controller {
         if (isset($GET['action'])) {
             switch ($GET['action']) {
                 case 'showUser':
-                    echo '<pre>';
-                    print_r($_SESSION);
-                    echo '</pre>';
                     require_once('classes' . DIRECTORY_SEPARATOR . 'userModel.def.php');
                     $userModel = new UserModel('{"id":"1"}', true);
                     $user = $userModel->getUser();
                     $user['status'] = '1';
                     $user['statusText'] = '';
                     $this->response = json_encode($user);
+                    break;
+                case 'getJourney':
+                    break;
+                case 'getJourneys':
                     break;
                 case 'registration':
                     require_once('classes' . DIRECTORY_SEPARATOR . 'userModel.def.php');
@@ -45,6 +46,14 @@ class Controller {
                                    "status":"1",
                                    "statusText":"User is logged out now."
                                  }';
+                    break;
+                case 'isLoggedIn':
+                    if (isset($_SESSION['userid'])) {
+                        $this->response = '{"isLoggedIn": "true"}';
+                    }
+                    else {
+                        $this->response = '{"isLoggedIn": "false"}';
+                    }
                     break;
                 default:
                     $this->response = '{

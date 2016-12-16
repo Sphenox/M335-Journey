@@ -100,9 +100,6 @@ class UserModel {
      */
     public function emailInUse($email) {
         $result = Database::getDB()->query('CALL checkIfEmailExist(\''.$email.'\');');
-        echo '<pre>';
-        print_r($result);
-        echo '</pre>';
         return $result[0]['emailCheck'];
     }
 
