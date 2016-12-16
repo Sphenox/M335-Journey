@@ -12,6 +12,25 @@ $(document).ready(function() {
 });
 var journeyApp = new angular.module('journeyApp', []);
 journeyApp.controller('MenuController', function($scope, $http) {
+    var request = $http({
+        method: "post",
+        url: "../services.php?action=showUser",
+        data: {}
+    });
+    request.then(
+        function successCallback(response) {
+            if (response.data.status == 1) {
+                $('#menu-username').val(response.data.prename + " " + response.data.name);
+                $('#menu-email').val(response.data.email);
+            } else {
+                window.location = '../html/login.html';
+            }
+        },
+        function errorCallback(response) {
+            Materialize.toast('Ups something went wrong!', 4000);
+        }
+    );
+
     $scope.logout = function() {
         var request = $http({
             method: "post",
@@ -132,6 +151,83 @@ journeyApp.controller('ImageViewController', function($scope, $http) {
             $('#modal-favorite').text('star');
         }
     }
+});
+
+journeyApp.controller('FavoritesController', function($scope, $http) {
+    /*$http.get('../services.php?action=getFavorites', function(response) {
+        if (response.data.status == 1) {
+            $scope.uploads = response.data.uploads;
+        } else {
+            Materialize.toast('Ups something went wrong! Couldn\'t load pictures.', 4000);
+        }
+    });*/
+
+    //Beispieldaten --> nach Anbindung an Backend entfernen!
+    $scope.uploads = [{
+            "id": "298",
+            "lat": "-41.082791",
+            "lng": "8.9823719",
+            "image": "../img/298.jpg",
+            "createdAt": "2016-05-12 12:00",
+            "comment": "Dies ist die Beschreibung des Bildes, hier kann drinn stehen was will",
+            "favorite": "true"
+        },
+        {
+            "id": "298",
+            "lat": "-41.082791",
+            "lng": "8.9823719",
+            "image": "../img/298.jpg",
+            "createdAt": "2016-05-12 12:00",
+            "comment": "Dies ist die Beschreibung des Bildes, hier kann drinn stehen was will",
+            "favorite": "true"
+        }
+    ];
+
+    $scope.openImage = function(card) {
+        /*$http.post('../services.php?action=getJourney', { id: card.data.id }, {
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;' }
+        }).then(function successCallback(response) {
+            if (response.status == 1 && response.data.status == 1) {
+                $('#modal-id').val(response.data.id);
+                $('#modal-comment').text(response.data.comment);
+                $('#modal-image').attr('src', response.data.image);
+                if (response.data.favorite == 0) {
+                    $('#modal-favorite').text('star_border');
+                } else {
+                    $('#modal-favorite').text('star');
+                }
+                initialize(response.data.lat, response.data.lng);
+                $('#imageView').modal('open');
+            } else {
+                Materialize.toast('Ups something went wrong! Couldn\'t load pictures.', 4000);
+                return false;
+            }
+        });*/
+
+        //Beispieldaten --> nach Anbindung an Backend entfernen!
+        $('#modal-id').val(1243);
+        $('#modal-comment').text('irgend ein Text');
+        $('#modal-image').attr('src', '../img/298.jpg');
+        if (1) {
+            $('#modal-favorite').text('star_border');
+        } else {
+            $('#modal-favorite').text('star');
+        }
+        initialize(46.818188, 8.227512);
+        $('#imageView').modal('open');
+    };
+});
+
+journeyApp.controller('AllPlacesController', function($scope, $http) {
+    $http.get('../services.php?action=getJourneys', function(response) {
+        if (response.data.status == 1) {
+            $.each(response.data.uploads, function(index, upload) {
+
+            });
+        } else {
+            Materialize.toast('Ups something went wrong! Couldn\'t load pictures.', 4000);
+        }
+    });
 });
 
 function initialize(_lat, _lng) {
