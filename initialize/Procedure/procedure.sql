@@ -25,7 +25,7 @@ CREATE PROCEDURE getAllVisibleLocation
 BEGIN
 	SELECT loc.* FROM journey.users as u , journey.locations as loc
 	WHERE u.id = inId
-	AND ((loc.FKuser = u.id)
+	AND ((loc.FKuser = u.id AND loc.visible = "none")
 	OR (loc.visible = "all")
 	OR (loc.visible = "friends" AND loc.FKuser IN (SELECT u.id FROM journey.users as u RIGHT JOIN journey.friends as f ON ((inId = f.FKuser1 AND f.FKuser2 = u.id ) OR ( inId = f.Fkuser2 AND f.FKuser1 = u.id))WHERE u.id != inId)));
 END //
@@ -34,21 +34,33 @@ CREATE PROCEDURE getFriendsVisibleLocation
 BEGIN
 SELECT loc.* FROM journey.users as u , journey.locations as loc
 	WHERE u.id = inId
-	AND ((loc.FKuser = u.id)
-	OR (loc.visible = "friends" AND loc.FKuser IN (SELECT u.id FROM journey.users as u RIGHT JOIN journey.friends as f ON ((inId = f.FKuser1 AND f.FKuser2 = u.id ) OR ( inId = f.Fkuser2 AND f.FKuser1 = u.id));
+	AND ((loc.FKuser = u.id )
+	OR (loc.visible = "friends" AND loc.FKuser IN (SELECT u.id FROM journey.users as u RIGHT JOIN journey.friends as f ON ((inId = f.FKuser1 AND f.FKuser2 = u.id ) OR ( inId = f.Fkuser2 AND f.FKuser1 = u.id))WHERE u.id != inId)));
 END //
-#Goht no nid
 CREATE PROCEDURE checkUserLogin
 (IN inEmail VARCHAR(255), IN inPassword VARCHAR(255))
 BEGIN
-	SELECT u.id FROM journey.users as u
+	SELECT u.id INTO outID FROM journey.users as u
 	WHERE u.email = inEmail
 	AND u.password = inPassword;
 END //
 CREATE PROCEDURE checkIfEmailExist
 (IN inEmail VARCHAR(255))
 BEGIN
-	SELECT IF(COUNT(u.*) > 0 , 'true' , 'false') as check FROM journey.users as u
+	SELECT IF(COUNT(*) > 0 , 'true' , 'false') as emailCheck FROM journey.users as u
 	WHERE u.email = inEmail;
+END //
+CREATE PROCEDURE getUser
+(IN inID int(11))
+BEGIN
+	Select u.* from journey.users as u where u.id = inID;
+END //
+CREATE PROCEDURE getVisitingUsersLocation
+(IN inId INT(11) , IN friendID)
+BEGIN
+	SELECT loc.* FROM journey.users as u  , journey.locations as loc
+	WHERE u.id = inId
+	AND ((loc.FKuser = friends.id AND loc.visible = "all")
+	OR (loc.visible = "friends" AND friendID IN (SELECT u.id FROM journey.users as u RIGHT JOIN journey.friends as f ON ((inId = f.FKuser1 AND f.FKuser2 = u.id ) OR ( inId = f.Fkuser2 AND f.FKuser1 = u.id))WHERE u.id != inId)));
 END //
 DELIMITER ;
