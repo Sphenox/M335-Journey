@@ -16,3 +16,11 @@
 #modal-image {
     max-width: 100%;
 }
+
+#modal-favorite {
+    cursor: pointer;
+}
+
+#sidenav-trigger {
+    cursor: pointer;
+}

@@ -1,3 +1,5 @@
+var map;
+var marker;
 $(document).ready(function() {
     //Side Navigation initialize
     $('.button-collapse').sideNav({
@@ -7,7 +9,6 @@ $(document).ready(function() {
         draggable: true
     });
     $('.modal').modal();
-
 });
 var journeyApp = new angular.module('journeyApp', []);
 journeyApp.controller('MenuController', function($scope, $http) {
@@ -40,6 +41,8 @@ journeyApp.controller('AllPicturesController', function($scope, $http) {
             Materialize.toast('Ups something went wrong! Couldn\'t load pictures.', 4000);
         }
     });*/
+
+    //Beispieldaten --> nach Anbindung an Backend entfernen!
     $scope.uploads = [{
             "id": "298",
             "lat": "-41.082791",
@@ -70,11 +73,19 @@ journeyApp.controller('AllPicturesController', function($scope, $http) {
     ];
 
     $scope.openImage = function(card) {
-        /*$http.get('../services.php?action=getJourney', function(response) {
+        /*$http.post('../services.php?action=getJourney', { id: card.data.id }, {
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;' }
+        }).then(function successCallback(response) {
             if (response.status == 1 && response.data.status == 1) {
                 $('#modal-id').val(response.data.id);
                 $('#modal-comment').text(response.data.comment);
                 $('#modal-image').attr('src', response.data.image);
+                if (response.data.favorite == 0) {
+                    $('#modal-favorite').text('star_border');
+                } else {
+                    $('#modal-favorite').text('star');
+                }
+                initialize(response.data.lat, response.data.lng);
                 $('#imageView').modal('open');
             } else {
                 Materialize.toast('Ups something went wrong! Couldn\'t load pictures.', 4000);
@@ -82,9 +93,72 @@ journeyApp.controller('AllPicturesController', function($scope, $http) {
             }
         });*/
 
+        //Beispieldaten --> nach Anbindung an Backend entfernen!
         $('#modal-id').val(1243);
         $('#modal-comment').text('irgend ein Text');
         $('#modal-image').attr('src', '../img/298.jpg');
+        if (1) {
+            $('#modal-favorite').text('star_border');
+        } else {
+            $('#modal-favorite').text('star');
+        }
+        initialize(46.818188, 8.227512);
         $('#imageView').modal('open');
     };
 });
+
+journeyApp.controller('ImageViewController', function($scope, $http) {
+    $scope.toFavorite = function(card) {
+
+        /*$http.post('../services.php?action=setFavorite', { id: card.data.id }, {
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;' }
+        }).then(function successCallback(response) {
+            if (response.status == 1 && response.data.status == 1) {
+                if ($('#modal-favorite').text() == "star") {
+                    $('#modal-favorite').text('star_border');
+                } else {
+                    $('#modal-favorite').text('star');
+                }
+            } else {
+                Materialize.toast('Ups something went wrong! Couldn\'t load pictures.', 4000);
+                return false;
+            }
+        });*/
+
+        //Beispieldaten --> nach Anbindung an Backend entfernen!
+        if ($('#modal-favorite').text() == "star") {
+            $('#modal-favorite').text('star_border');
+        } else {
+            $('#modal-favorite').text('star');
+        }
+    }
+});
+
+function initialize(_lat, _lng) {
+    map = null;
+    map = new google.maps.Map(document.getElementById('modal-map'), {
+        zoom: 8,
+        center: new google.maps.LatLng(_lat, _lng),
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+    });
+    setMarker(new google.maps.LatLng(_lat, _lng));
+    google.maps.event.addListenerOnce(map, 'idle', function() {
+        google.maps.event.trigger(map, 'resize');
+    });
+}
+
+function setMarker(location) {
+    deleteMarker();
+    newMarker = new google.maps.Marker({
+        position: location,
+        map: map
+    });
+    marker = newMarker;
+}
+
+function deleteMarker() {
+    if (marker && map) {
+        marker.setMap(map);
+        marker = {};
+    }
+}

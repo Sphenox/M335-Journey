@@ -20,13 +20,15 @@
     <script type="text/javascript" src="../vendor/angularjs/angular.min.js"></script>
     <!--Import custom JS -->
     <script type="text/javascript" src="../js/main.js"></script>
+    <!--Import Google Maps API-->
+    <script src="https://maps.google.com/maps/api/js?key=AIzaSyCgG5JdCojF7rmYP1bhQgZQz_rfXITwKno" type="text/javascript"></script>
 </head>
 
 <body>
     <nav>
         <div class="nav-wrapper blue white-text">
             <ul>
-                <li data-activates="slide-out" class="button-collapse left"><i class="material-icons">menu</i></li>
+                <li id="sidenav-trigger" data-activates="slide-out" class="button-collapse left"><i class="material-icons">menu</i></li>
             </ul>
         </div>
     </nav>
@@ -63,11 +65,13 @@
         <li ng-click="logout()"><a href="#!"><i class="material-icons">power_settings_new</i>Sing out</a></li>
     </ul>
 
-    <div id="imageView" class="modal">
+    <div id="imageView" class="modal" ng-controller="ImageViewController">
         <div class="modal-content">
             <input type="hidden" id="modal-id" value="" />
             <img src="" id="modal-image" />
             <p id="modal-comment">A bunch of text</p>
+            <p><i class="material-icons" id="modal-favorite" ng-click="toFavorite(this)"></i></p>
+            <div id="modal-map" style="max-width: 100%; height: 500px;"></div>
         </div>
         <div class="modal-footer">
             <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">close</a>
