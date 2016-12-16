@@ -64,9 +64,65 @@ class UserModel {
 
     }
 
-
+    /**
+     * @param $userInput
+     * @return array
+     */
     public function newUser($userInput) {
         $userInput = json_decode($userInput);
+        // Wurden alle nötigen daten uebergeben?
+        if (isset($userInput->email) && isset($userInput->password) && isset($userInput->name) && isset($userInput->prename)) {
+            if ($this->emailInUse($userInput->email)) {
+                $return['status'] = '0';
+                $return['statusText'] = 'This email is already in use.';
+                return $return;
+            }
+            $userInput->password = md5($userInput->password);
+            $response = Database::getDB()->insert('users', $userInput);
+            if ($response) {
+                $return['status'] = '1';
+                $return['statusText'] = 'User is successfully created.';
+            }
+            else {
+                $return['status'] = '0';
+                $return['statusText'] = 'There was an error while creating the user.';
+            }
+        }
+        else {
+            $return['status'] = '0';
+            $return['statusText'] = 'The transferred data is not correct.';
+        }
+        return $return;
+    }
+
+    /**
+     * @param $email
+     * @return bool
+     */
+    public function emailInUse($email) {
+        //TODO: email check
+        return false;
+    }
+
+    public function userLogin($userInput) {
+        $userInput = json_decode($userInput);
+        if(isset($userInput->email) && isset($userInput->password) ){
+            if(false){
+                $return['status'] = '1';
+                $return['statusText'] = '';
+            }
+            else {
+                $return['status'] = '0';
+                $return['statusText'] = 'Username or password are wrong!';
+            }
+        }
+        else {
+            $return['status'] = '0';
+            $return['statusText'] = 'The transferred data is not correct.';
+        }
+
+
+        return $return;
     }
 
 }

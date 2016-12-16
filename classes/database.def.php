@@ -109,7 +109,7 @@ class Database {
      * @return bool
      */
     public function insert($table, $values) {
-        if (!empty($table) && is_array($values)) {
+        if (!empty($table) && (is_array($values) || is_object($values))) {
             // Das SQL-Statement zusammenbauen
             $sqlstr = 'INSERT INTO ' . $table . ' ';
             $rowstr = '(';

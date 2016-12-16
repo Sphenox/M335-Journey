@@ -22,27 +22,18 @@ class Controller {
                     $userModel = new UserModel('{"id":"1"}', true);
                     $user = $userModel->getUser();
                     $user['status'] = '1';
-                    $user['statusText'] = 'Fuck that';
+                    $user['statusText'] = '';
                     $this->response = json_encode($user);
                     break;
                 case 'registration':
                     require_once('classes' . DIRECTORY_SEPARATOR . 'userModel.def.php');
-                    $userInput = file_get_contents('php://input');
                     $userModel = new UserModel();
-                    $userModel->newUser($userInput);
-
-
-
-                    $this->response = '{
-                                   "status":"1",
-                                   "statusText":"REGISCHTRATION IST FERTISCH, NE"
-                                 }';
+                    $this->response = json_encode($userModel->newUser(file_get_contents('php://input')));
                     break;
                 case 'login':
-                    $this->response = '{
-                                   "status":"1",
-                                   "statusText":"LOGIN IST FERTISCH, NE"
-                                 }';
+                    require_once('classes' . DIRECTORY_SEPARATOR . 'userModel.def.php');
+                    $userModel = new UserModel();
+                    $this->response = json_encode($userModel->userLogin(file_get_contents('php://input')));
                     break;
                 case 'logout':
                     $this->response = '{
