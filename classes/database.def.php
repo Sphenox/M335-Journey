@@ -40,6 +40,7 @@ class Database {
         $this->mysqliObj->set_charset('UTF_8');
         if ($this->mysqliObj->select_db($this->DBname) === FALSE) {
             include_once('initialize/init_db.php');
+            $this->mysqliObj->select_db($this->DBname);
         }
     }
 

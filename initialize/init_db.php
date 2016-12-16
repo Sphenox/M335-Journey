@@ -67,20 +67,15 @@ if ($db->query($createDB) === TRUE) {
         die("Favorites Tabelle konnte nicht erstellt werden");
     }
 
-
-    echo "Alle Tabellen wurden korrekt eingerichtet.";
-
-    // Das Ganze insert File in die DB einspielen.
-    $lines = file('initialize/Insert/insert.sql');
+    // Das Ganze insert File in die DB einspielen. (Inserts)
+    $lines = file(__DIR__ . '\Insert\insert.sql');
     $sqlStmnt = '';
     foreach ($lines as $line) {
         // Falls es ein Kommentar oder eine Leere Zeile ist
         if (substr($line, 0, 2) == '--' || $line == '') {
             continue;
         }
-
         $sqlStmnt .= $line;
-
         // Falls die Linie ein ; am schluss hat, den befehl ausführen.
         if (substr(trim($line), -1, 1) == ';') {
             $db->query($sqlStmnt);
@@ -88,10 +83,10 @@ if ($db->query($createDB) === TRUE) {
             $sqlStmnt = '';
         }
     }
-}
+    // Procedures einbinden
+    $db->multi_query(file_get_contents(__DIR__ . '\Procedure\procedure.sql'));
 
-
-$db->close();
+    $db->close();
 }
 else {
     die("DB konnte nicht erstellt werden.");
