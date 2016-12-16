@@ -13,7 +13,7 @@ journeyApp.controller('LoginFormController', function($scope, $http) {
         request.then(
             function successCallback(response) {
                 if (response.data.status == 1) {
-                    window.location = './dashboard.html';
+                    window.location = './allPictures.html';
                 } else {
                     Materialize.toast('Username or password are wrong!', 4000);
                 }

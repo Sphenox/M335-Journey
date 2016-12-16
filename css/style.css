@@ -1,0 +1,18 @@
+.nav-wrapper form {
+    width: 90%;
+}
+
+.nav-wrapper a {
+    width: 10%;
+}
+
+#allPictures-wrapper {
+    height: auto;
+    width: 100%;
+    display: block;
+    padding: 20px;
+}
+
+.card-image {
+    width: 200px;
+}

@@ -9,7 +9,7 @@
     <!--Import materialize.css-->
     <link type="text/css" rel="stylesheet" href="../vendor/materialize/css/materialize.min.css" media="screen,projection" />
     <!--Import custom CSS-->
-    <link type="text/css" rel="stylesheet" href="../css/dashboard.css" />
+    <link type="text/css" rel="stylesheet" href="../css/style.css" />
     <!--Let browser know website is optimized for mobile-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!--Import jQuery-->
@@ -19,7 +19,7 @@
     <!--Import AngularJs -->
     <script type="text/javascript" src="../vendor/angularjs/angular.min.js"></script>
     <!--Import custom JS -->
-    <script type="text/javascript" src="../js/dashboard.js"></script>
+    <script type="text/javascript" src="../js/main.js"></script>
 </head>
 
 <body>
@@ -30,7 +30,21 @@
             </ul>
         </div>
     </nav>
-    <ul id="slide-out" class="side-nav">
+    <div ng-controller="AllPicturesController" id="allPictures-wrapper">
+        <div class="row">
+            <div class="col s12 m7 l4" ng-repeat="upload in uploads">
+                <div class="card horizontal">
+                    <div class="card-image">
+                        <img src="{{upload.image}}">
+                    </div>
+                    <div class="card-content">
+                        <p>{{upload.comment}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <ul id="slide-out" class="side-nav" ng-controller="MenuController">
         <li>
             <div class="userView ">
                 <div class="background blue white-text">
@@ -41,11 +55,11 @@
                 <a href="#!email "><span class="white-text email ">jdandturk@gmail.com</span></a>
             </div>
         </li>
-        <li><a href="#! "><i class="material-icons">star</i>Favorites</a></li>
-        <li><a href="#! "><i class="material-icons">turned_in</i>All Pictures</a></li>
-        <li><a href="#! "><i class="material-icons">camera_enhance</i>New Picture</a></li>
-        <li><a href="#! "><i class="material-icons">map</i>My Places</a></li>
-        <li><a href="#! "><i class="material-icons">power_settings_new</i>Sing out</a></li>
+        <li><a href="./favorites.html"><i class="material-icons">star</i>Favorites</a></li>
+        <li><a href="./allPictures.html "><i class="material-icons">turned_in</i>All Pictures</a></li>
+        <li><a href="./newPicture.html"><i class="material-icons">camera_enhance</i>New Picture</a></li>
+        <li><a href="./myPlaces.html"><i class="material-icons">map</i>My Places</a></li>
+        <li ng-click="logout()"><a href="#!"><i class="material-icons">power_settings_new</i>Sing out</a></li>
     </ul>
 </body>
 

@@ -6,8 +6,8 @@ journeyApp.controller('RegistrationFormController', function($scope, $http) {
             method: "post",
             url: "../services.php?action=registration",
             data: {
-                givenname: $('#givenname').val(),
-                surname: $('#surname').val(),
+                prename: $('#givenname').val(),
+                name: $('#surname').val(),
                 email: $('#email').val(),
                 password: $('#password').val()
             }
@@ -15,7 +15,7 @@ journeyApp.controller('RegistrationFormController', function($scope, $http) {
         request.then(
             function successCallback(response) {
                 if (response.data.status == 1) {
-                    window.location = './dashboard.html';
+                    window.location = './allPictures.html';
                 } else {
                     Materialize.toast('Ups something went wrong! Errormessage: ' + response.data.statusText, 4000);
                 }
