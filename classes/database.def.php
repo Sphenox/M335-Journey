@@ -129,6 +129,10 @@ class Database {
         return false;
     }
 
+    public function getLastInsertId() {
+        return $this->mysqliObj->insert_id;
+    }
+
     public function escape($toEscape) {
         return $this->mysqliObj->escape_string($toEscape);
     }

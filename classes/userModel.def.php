@@ -19,32 +19,57 @@ class UserModel {
      * @return array
      */
     public function getUser() {
-        return get_object_vars($this->user);
-    }
-
-    /**
-     * UserModel constructor.
-     * @param string $json
-     * @param bool $fullUser
-     */
-    public function __construct($userId, $fullUser = false) {;
-        if (isset($userId)) {
-            if ($fullUser) {
-                $this->getFullUser($userId);
-            }
+        if(is_object($this->user)){
+            return get_object_vars($this->user);
+        }
+        else {
+            return $this->user;
         }
     }
 
     /**
+     * @param $frontJson
+     * @return bool
+     */
+    public function getUserToDisplay($frontJson) {
+        if(empty($frontJson) && isset($_SESSION['userId'])){
+            $userId = $_SESSION['userId'];
+        }
+        else if (!empty($frontJson)) {
+            $json = json_decode($frontJson);
+            if(isset($json->id) && intval($json->id)){
+                $userId = $json->id;
+            }
+            else {
+                $this->user['status'] = '0';
+                $this->user['statusText'] = 'JSON is not valid';
+            }
+        }
+        else {
+            $this->user['status'] = '0';
+            $this->user['statusText'] = 'No User selected';
+            return false;
+        }
+        return $userId;
+    }
+
+    /**
      * @param $id
-     * @return User
+     * @return User | bool
      */
     protected function getOnlyUser($id) {
         $user = new User();
         //TODO: PROCEDURE einbauen
         $result = Database::getDB()->query('SELECT * FROM users WHERE id = ' . $id);
-        foreach ($result[0] as $field => $data) {
-            $user->$field = $data;
+        if(!empty($result) && is_array($result)){
+            foreach ($result[0] as $field => $data) {
+                $user->$field = $data;
+            }
+        }
+        else {
+            $this->user['status'] = '0';
+            $this->user['statusText'] = 'User with ID:'.$id.' was not found.';
+            return false;
         }
 
         return $user;
@@ -55,11 +80,15 @@ class UserModel {
      */
     public function getFullUser($id) {
         $user = $this->getOnlyUser($id);
-        $locModel = new LocationModel();
-        $user->journeys = $locModel->getLocationsFromUser($id);
-        $user->friends = Friends::getFriendsFromID($id);
-        $user->favorites = Favorites::getFavoritesFromId($id);
-        $this->user = $user;
+        if($user !== false){
+            $locModel = new LocationModel();
+            $user->journeys = $locModel->getLocationsFromUser($id);
+            $user->friends = Friends::getFriendsFromID($id);
+            $user->favorites = Favorites::getFavoritesFromId($id);
+            $this->user = get_object_vars($user);
+            $this->user['status'] = '1';
+            $this->user['statusText'] = '';
+        }
     }
 
     /**
@@ -75,9 +104,10 @@ class UserModel {
                 $return['statusText'] = 'This email is already in use.';
                 return $return;
             }
-            $userInput->password = md5($userInput->password);
+            $userInput->password = hash('sha512', $userInput->password);
             $response = Database::getDB()->insert('users', $userInput);
             if ($response) {
+                $_SESSION['userId'] = Database::getDB()->getLastInsertId();
                 $return['status'] = '1';
                 $return['statusText'] = 'User is successfully created.';
             }
