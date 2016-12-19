@@ -20,15 +20,20 @@ journeyApp.controller('MenuController', function($scope, $http) {
     });
     request.then(
         function successCallback(response) {
+            console.log(response);
             if (response.data.status == 1) {
+                console.log("success");
                 $('#menu-username').text(response.data.prename + " " + response.data.name);
                 $('#menu-email').text(response.data.email);
                 $('#menu-image').attr('src', response.data.userImage);
             } else {
+                console.log('fail');
+                window.location = "../html/login.html";
                 Materialize.toast('Ups something went wrong with your profile!', 4000);
             }
         },
         function errorCallback(response) {
+            window.location = "../html/login.html";
             Materialize.toast('Ups something went wrong!', 4000);
         }
     );
@@ -41,6 +46,7 @@ journeyApp.controller('MenuController', function($scope, $http) {
         });
         request.then(
             function successCallback(response) {
+                console.log(response);
                 if (response.data.status == 1) {
                     window.location = './login.html';
                 } else {
@@ -248,7 +254,7 @@ journeyApp.controller('AllPlacesController', function($scope, $http) {
 });
 
 journeyApp.controller('NewPictureFormController', function($scope, $http) {
-    $scope.createPicture = function() {
+    $scope.submit = function() {
 
     }
 });
