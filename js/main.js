@@ -61,16 +61,17 @@ journeyApp.controller('MenuController', function($scope, $http) {
 });
 
 journeyApp.controller('AllPicturesController', function($scope, $http) {
-    /*$http.get('../services.php?action=getJourneys').then(function(response) {
+    $http.get('../services.php?action=getJourneys').then(function(response) {
+        console.log(response);
         if (response.data.status == 1) {
             $scope.uploads = response.data.uploads;
         } else {
             Materialize.toast('Ups something went wrong! Couldn\'t load pictures.', 4000);
         }
-    });*/
+    });
 
     //Beispieldaten --> nach Anbindung an Backend entfernen!
-    $scope.uploads = [{
+    /*$scope.uploads = [{
             "id": "298",
             "lat": "-41.082791",
             "lng": "8.9823719",
@@ -97,7 +98,7 @@ journeyApp.controller('AllPicturesController', function($scope, $http) {
             "comment": "Dies ist die Beschreibung des Bildes, hier kann drinn stehen was will",
             "favorite": "true"
         }
-    ];
+    ];*/
 
     $scope.openImage = function(card) {
         /*$http.post('../services.php?action=getJourney', { id: card.data.id }, {
@@ -168,16 +169,16 @@ journeyApp.controller('ImageViewController', function($scope, $http) {
 });
 
 journeyApp.controller('FavoritesController', function($scope, $http) {
-    /*$http.get('../services.php?action=getFavorites').then(function(response) {
+    $http.get('../services.php?action=getFavorites').then(function(response) {
         if (response.data.status == 1) {
-            $scope.uploads = response.data.uploads;
+            $scope.uploads = response.data;
         } else {
             Materialize.toast('Ups something went wrong! Couldn\'t load pictures.', 4000);
         }
-    });*/
+    });
 
     //Beispieldaten --> nach Anbindung an Backend entfernen!
-    $scope.uploads = [{
+    /*$scope.uploads = [{
             "id": "298",
             "lat": "-41.082791",
             "lng": "8.9823719",
@@ -195,7 +196,7 @@ journeyApp.controller('FavoritesController', function($scope, $http) {
             "comment": "Dies ist die Beschreibung des Bildes, hier kann drinn stehen was will",
             "favorite": "true"
         }
-    ];
+    ];*/
 
     $scope.openImage = function(card) {
         /*$http.post('../services.php?action=getJourney', { id: card.data.id }, {
@@ -260,7 +261,12 @@ journeyApp.controller('NewPictureFormController', function($scope, $http) {
         var request = $http({
             method: "post",
             url: "../services.php?action=newJourney",
-            datat: {}
+            datat: {
+                "lat": "-41.082791",
+                "lng": "8.9823719",
+                "image": "/PATH/TO/IMG",
+                "comment": $("#newPicture-description").val()
+            }
         });
         request.then(function successCallback(response) {
             window.location = '../html/allPictures.html';
