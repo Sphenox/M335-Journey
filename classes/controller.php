@@ -22,7 +22,7 @@ class Controller {
             $userModel = new UserModel();
             $userId = $userModel->getUserToDisplay($frontJson);
 
-            if ($userId != false || $GET['action'] == 'login') {
+            if ($userId != false || $GET['action'] == 'login' || $GET['action'] == 'registration') {
                 switch ($GET['action']) {
                     case 'showUser':
                         if ($userId !== false) {
