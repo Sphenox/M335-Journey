@@ -6,6 +6,7 @@
  * Date: 13.12.2016
  * Time: 11:49
  */
+require_once('classes' . DIRECTORY_SEPARATOR . 'userModel.def.php');
 class Controller {
 
     private $model;
@@ -22,14 +23,12 @@ class Controller {
 
             switch ($GET['action']) {
                 case 'showUser':
-                    require_once('classes' . DIRECTORY_SEPARATOR . 'userModel.def.php');
                     $userModel = new UserModel();
                     $userId = $userModel->getUserToDisplay($frontJson);
                     if($userId !== false) {
-                        $userModel->getFullUser($userId);
+                        $userModel->readFullUser($userId);
                     }
-                    $user = $userModel->getUser();
-                    $this->response = json_encode($user);
+                    $this->response = $userModel->getUser();
                     break;
                 case 'getJourney':
                     break;
@@ -37,36 +36,35 @@ class Controller {
                     break;
                 case 'getFavorites':
                     break;
+                case 'toggleFavorite':
+                    require_once('classes' . DIRECTORY_SEPARATOR . 'favorites.def.php');
+                    $fav = new Favorites();
+                    $this->response = $fav->toggleFavorite($frontJson);
+                    break;
                 case 'registration':
-                    require_once('classes' . DIRECTORY_SEPARATOR . 'userModel.def.php');
                     $userModel = new UserModel();
-                    $this->response = json_encode($userModel->newUser($frontJson));
+                    $this->response = $userModel->newUser($frontJson);
                     break;
                 case 'login':
-                    require_once('classes' . DIRECTORY_SEPARATOR . 'userModel.def.php');
                     $userModel = new UserModel();
-                    $this->response = json_encode($userModel->userLogin($frontJson));
+                    $this->response = $userModel->userLogin($frontJson);
                     break;
                 case 'logout':
                     session_unset();
-                    $this->response = '{
-                                   "status":"1",
-                                   "statusText":"User is logged out now."
-                                 }';
+                    $this->response['status'] = '1';
+                    $this->response['statusText'] = 'User is logged out Now';
                     break;
                 case 'isLoggedIn':
                     if (isset($_SESSION['userid'])) {
-                        $this->response = '{"isLoggedIn": "true"}';
+                        $this->response['isLoggedIn'] = 'true';
                     }
                     else {
-                        $this->response = '{"isLoggedIn": "false"}';
+                        $this->response['isLoggedIn'] = 'false';
                     }
                     break;
                 default:
-                    $this->response = '{
-                                   "status":"1",
-                                   "statusText":"OKI DOKI"
-                                 }';
+                    $this->response['status'] = '1';
+                    $this->response['statusText'] = 'That action has not been defined yet.';
                     break;
             }
         }
@@ -75,7 +73,7 @@ class Controller {
 
     public function display() {
 
-        return $this->response;
+        return json_encode($this->response);
     }
 
 

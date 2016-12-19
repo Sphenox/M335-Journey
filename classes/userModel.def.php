@@ -51,7 +51,7 @@ class UserModel {
      * @param $id
      * @return User | bool
      */
-    protected function getOnlyUser($id) {
+    protected function readUserOnly($id) {
         $user = new User();
         //TODO: PROCEDURE einbauen
         $result = Database::getDB()->query('SELECT * FROM users WHERE id = ' . $id);
@@ -72,8 +72,8 @@ class UserModel {
     /**
      * @param $id
      */
-    public function getFullUser($id) {
-        $user = $this->getOnlyUser($id);
+    public function readFullUser($id) {
+        $user = $this->readUserOnly($id);
         if ($user !== false) {
             $locModel = new LocationModel();
             $user->journeys = $locModel->getLocationsFromUser($id);
@@ -133,7 +133,7 @@ class UserModel {
             $password = hash('sha512', $userInput->password);
             $result = Database::getDB()->query('CALL checkUserLogin(\'' . $email . '\',\'' . $password . '\')');
             if (intval($result[0]['id']) != 0 || intval($result[0]['id']) != -1) {
-                $_SESSION["userId"] = $result[0]['id'];
+                $_SESSION['userId'] = $result[0]['id'];
                 $return['status'] = '1';
                 $return['statusText'] = 'Successfull login.';
             }

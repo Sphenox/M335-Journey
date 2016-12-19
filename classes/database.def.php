@@ -119,8 +119,8 @@ class Database {
                 $rowstr .= $row . ',';
                 $valuestr .= '\'' . self::escape($value) . '\',';
             }
-            $sqlstr .= trim($rowstr, ",") . ') VALUES ';
-            $sqlstr .= trim($valuestr, ",") . ');';
+            $sqlstr .= trim($rowstr, ',') . ') VALUES ';
+            $sqlstr .= trim($valuestr, ',') . ');';
             $result = $this->mysqliObj->query($sqlstr);
             if ($result === TRUE) {
                 return true;
