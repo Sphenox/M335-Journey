@@ -70,3 +70,9 @@ BEGIN
 	 AND fav.fklocation = inLocation
     AND u.id = inID;
 END;
+CREATE PROCEDURE getLocation
+(IN inLocation INT(11))
+BEGIN
+	SELECT loc.* FROM journey.locations as loc
+	WHERE loc.id = inLocation;
+END;
