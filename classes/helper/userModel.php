@@ -6,10 +6,10 @@
  * Date: 13.12.2016
  * Time: 13:14
  */
-require_once('classes' . DIRECTORY_SEPARATOR . 'user.def.php');
-require_once('classes' . DIRECTORY_SEPARATOR . 'friends.def.php');
-require_once('classes' . DIRECTORY_SEPARATOR . 'favorites.def.php');
-require_once('classes' . DIRECTORY_SEPARATOR . 'locationModel.def.php');
+require_once('classes' . DIRECTORY_SEPARATOR . 'defines' . DIRECTORY_SEPARATOR . 'user.def.php');
+require_once('classes' . DIRECTORY_SEPARATOR . 'helper' . DIRECTORY_SEPARATOR . 'friends.php');
+require_once('classes' . DIRECTORY_SEPARATOR . 'helper' . DIRECTORY_SEPARATOR . 'favorites.php');
+require_once('classes' . DIRECTORY_SEPARATOR . 'helper' . DIRECTORY_SEPARATOR . 'locationModel.php');
 
 class UserModel {
 
@@ -23,7 +23,7 @@ class UserModel {
             return get_object_vars($this->user);
         }
         else {
-            if(is_array($this->user)) {
+            if (is_array($this->user)) {
                 return $this->user;
             }
             else {

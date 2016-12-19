@@ -5,7 +5,7 @@
  * Date: 13.12.2016
  * Time: 11:32
  */
-require_once('classes' . DIRECTORY_SEPARATOR . 'location.def.php');
+require_once('classes' . DIRECTORY_SEPARATOR . 'defines' . DIRECTORY_SEPARATOR . 'location.def.php');
 
 class Favorites {
 
@@ -23,6 +23,11 @@ class Favorites {
         return $favoritesList;
     }
 
+    /**
+     * @param $userId
+     * @param $locId
+     * @return mixed
+     */
     public static function isFavorite($userId, $locId) {
         $result = Database::getDB()->query('CALL checkIfFavoured(' . $userId . ', ' . $locId . ')');
         return $result[0]['isFavoured'];

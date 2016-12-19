@@ -6,7 +6,7 @@
  * Date: 13.12.2016
  * Time: 11:49
  */
-require_once('classes' . DIRECTORY_SEPARATOR . 'userModel.def.php');
+require_once('classes' . DIRECTORY_SEPARATOR . 'helper' . DIRECTORY_SEPARATOR . 'userModel.php');
 class Controller {
 
     private $model;
@@ -32,7 +32,7 @@ class Controller {
                 case 'getJourneys':
                     $userModel = new UserModel();
                     $userId = $userModel->getUserToDisplay($frontJson);
-                    require_once('classes' . DIRECTORY_SEPARATOR . 'locationModel.def.php');
+                    require_once('classes' . DIRECTORY_SEPARATOR . 'helper' . DIRECTORY_SEPARATOR . 'locationModel.php');
                     $locModel = new LocationModel();
                     if($userId !== false) {
                         $this->response = $locModel->getLocationsFromUser($userId);
@@ -43,12 +43,23 @@ class Controller {
                         $this->response['status'] = '0';
                         $this->response['statusText'] = 'User id is not set.';
                     }
-
                     break;
                 case 'getFavorites':
+                    require_once('classes' . DIRECTORY_SEPARATOR . 'helper' . DIRECTORY_SEPARATOR . 'favorites.php');
+                    $userModel = new UserModel();
+                    $userId = $userModel->getUserToDisplay($frontJson);
+                    if($userId !== false) {
+                        $this->response = Favorites::getFavoritesFromId($userId);
+                        $this->response['status'] = '1';
+                        $this->response['statusText'] = '';
+                    }
+                    else {
+                        $this->response['status'] = '0';
+                        $this->response['statusText'] = 'User id is not set.';
+                    }
                     break;
                 case 'toggleFavorite':
-                    require_once('classes' . DIRECTORY_SEPARATOR . 'favorites.def.php');
+                    require_once('classes' . DIRECTORY_SEPARATOR . 'helper' . DIRECTORY_SEPARATOR . 'favorites.php');
                     $fav = new Favorites();
                     $this->response = $fav->toggleFavorite($frontJson);
                     break;
