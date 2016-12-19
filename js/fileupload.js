@@ -4,8 +4,11 @@ journeyApp.controller('MyCtrl', ['$scope', 'Upload', '$timeout', function($scope
     $scope.uploadPic = function(file) {
         console.log({ username: $scope.username, file: file });
         file.upload = Upload.upload({
-            url: '../services.php?action=login',
-            data: { username: $scope.username, file: file },
+            url: '../services.php?action=registration',
+            method: 'POST',
+            file: file,
+            data: { 'username': $scope.username,
+            'targetPath' : 'files/user/'}
         });
 
         file.upload.then(function(response) {
