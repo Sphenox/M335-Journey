@@ -7,6 +7,7 @@
  * Time: 14:09
  */
 require_once ('classes' . DIRECTORY_SEPARATOR . 'location.def.php');
+require_once ('classes' . DIRECTORY_SEPARATOR . 'favorites.def.php');
 
 class LocationModel {
 
@@ -18,6 +19,7 @@ class LocationModel {
             $locationObj = new Location();
             foreach ($location as $field => $data) {
                 $locationObj->$field = $data;
+                $locationObj->favorite = Favorites::isFavorite($userId,$location['id']);
             }
             $locations[] = $locationObj;
         }

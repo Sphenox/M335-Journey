@@ -16,4 +16,5 @@ class Location {
     public $createdAt;
     public $visible;
     public $FKuser;
+    public $favorite;
 }

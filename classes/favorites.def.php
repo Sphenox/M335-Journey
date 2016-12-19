@@ -23,6 +23,11 @@ class Favorites {
         return $favoritesList;
     }
 
+    public static function isFavorite($userId, $locId) {
+        $result = Database::getDB()->query('CALL checkIfFavoured(' . $userId . ', ' . $locId . ')');
+        return $result[0]['isFavoured'];
+    }
+
     /**
      * @param $frontJson
      * @return array
