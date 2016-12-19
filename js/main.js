@@ -23,7 +23,7 @@ journeyApp.controller('MenuController', function($scope, $http) {
                 $('#menu-username').val(response.data.prename + " " + response.data.name);
                 $('#menu-email').val(response.data.email);
             } else {
-                window.location = '../html/login.html';
+                //window.location = '../html/login.html';
             }
         },
         function errorCallback(response) {
