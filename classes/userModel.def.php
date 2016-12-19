@@ -43,6 +43,7 @@ class UserModel {
             else {
                 $this->user['status'] = '0';
                 $this->user['statusText'] = 'JSON is not valid';
+                return false;
             }
         }
         else {
