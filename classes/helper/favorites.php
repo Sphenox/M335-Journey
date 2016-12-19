@@ -17,6 +17,7 @@ class Favorites {
             foreach ($favorite as $field => $data) {
                 // Jeder Favorit in ein Location Objekt einfüllen
                 $location->$field = $data;
+                $location->favorite = self::isFavorite($userId, $location->id);
             }
             $favoritesList[] = $location;
         }
@@ -96,6 +97,20 @@ class Favorites {
             $response['status'] = '0';
             $response['statusText'] = 'There was an unknown error while removing the Favorite.';
         }
+        return $response;
+    }
+
+    public function callGetFavorites($userId) {
+        if ($userId !== false) {
+            $response['uploads'] = self::getFavoritesFromId($userId);
+            $response['status'] = '1';
+            $response['statusText'] = '';
+        }
+        else {
+            $response['status'] = '0';
+            $response['statusText'] = 'User id is not set.';
+        }
+
         return $response;
     }
 

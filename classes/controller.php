@@ -41,15 +41,8 @@ class Controller {
                     require_once('classes' . DIRECTORY_SEPARATOR . 'helper' . DIRECTORY_SEPARATOR . 'favorites.php');
                     $userModel = new UserModel();
                     $userId = $userModel->getUserToDisplay($frontJson);
-                    if ($userId !== false) {
-                        $this->response = Favorites::getFavoritesFromId($userId);
-                        $this->response['status'] = '1';
-                        $this->response['statusText'] = '';
-                    }
-                    else {
-                        $this->response['status'] = '0';
-                        $this->response['statusText'] = 'User id is not set.';
-                    }
+                    $fav = new Favorites();
+                    $this->response = $fav->callGetFavorites($userId);
                     break;
                 case 'toggleFavorite':
                     require_once('classes' . DIRECTORY_SEPARATOR . 'helper' . DIRECTORY_SEPARATOR . 'favorites.php');
