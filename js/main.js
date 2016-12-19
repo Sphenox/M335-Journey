@@ -3,7 +3,7 @@ var markers;
 $(document).ready(function() {
     //Side Navigation initialize
     $('.button-collapse').sideNav({
-        menuWidth: 240,
+        menuWidth: 280,
         edge: 'left',
         closeOnClick: true,
         draggable: true
