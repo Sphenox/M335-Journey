@@ -25,3 +25,15 @@
 #sidenav-trigger {
     cursor: pointer;
 }
+
+@media screen and (min-width: 480px) {
+    #login-form-wrapper,
+    #register-form-wrapper,
+    #newPicture-wrapper {
+        width: 500px;
+    }
+    #newPicture-wrapper {
+        margin-left: auto;
+        margin-right: auto;
+    }
+}

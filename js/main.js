@@ -20,14 +20,11 @@ journeyApp.controller('MenuController', function($scope, $http) {
     });
     request.then(
         function successCallback(response) {
-            console.log(response);
             if (response.data.status == 1) {
-                console.log("success");
                 $('#menu-username').text(response.data.prename + " " + response.data.name);
                 $('#menu-email').text(response.data.email);
                 $('#menu-image').attr('src', response.data.userImage);
             } else {
-                console.log('fail');
                 window.location = "../html/login.html";
                 Materialize.toast('Ups something went wrong with your profile!', 4000);
             }
@@ -46,7 +43,6 @@ journeyApp.controller('MenuController', function($scope, $http) {
         });
         request.then(
             function successCallback(response) {
-                console.log(response);
                 if (response.data.status == 1) {
                     window.location = './login.html';
                 } else {
@@ -62,7 +58,6 @@ journeyApp.controller('MenuController', function($scope, $http) {
 
 journeyApp.controller('AllPicturesController', function($scope, $http) {
     $http.get('../services.php?action=getJourneys').then(function(response) {
-        console.log(response);
         if (response.data.status == 1) {
             $scope.uploads = response.data.uploads;
         } else {
@@ -241,7 +236,6 @@ journeyApp.controller('FavoritesController', function($scope, $http) {
 
 journeyApp.controller('AllPlacesController', function($scope, $http) {
     $http.get('../services.php?action=getJourneys').then(function(response) {
-        console.log("Test2");
         if (response.data.status == 1) {
             var _markers = new Array();
             $.each(response.data.uploads, function(index, upload) {
