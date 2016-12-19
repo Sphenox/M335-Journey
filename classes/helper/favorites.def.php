@@ -5,8 +5,6 @@
  * Date: 13.12.2016
  * Time: 11:32
  */
-require_once('classes' . DIRECTORY_SEPARATOR . 'defines' . DIRECTORY_SEPARATOR . 'location.def.php');
-
 class Favorites {
 
     public static function getFavoritesFromId($userId) {
@@ -40,9 +38,9 @@ class Favorites {
      */
     public function toggleFavorite($frontJson) {
         $jsonObj = json_decode($frontJson);
-        if (isset($_SESSION['userId']) && isset($jsonObj->locId) && intval($jsonObj->locId) != 0) {
+        if (isset($_SESSION['userId']) && isset($jsonObj->id) && intval($jsonObj->id) != 0) {
             $userId = intval($_SESSION['userId']);
-            $locId = intval($jsonObj->locId);
+            $locId = intval($jsonObj->id);
             $result = Database::getDB()->query('CALL checkIfFavoured(' . $userId . ', ' . $locId . ')');
 
             // Mit String vergleichen weil es aus der DB kommt und nicht mit einem BOOL vergleicht werden kann.

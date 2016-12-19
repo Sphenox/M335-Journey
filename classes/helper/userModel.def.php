@@ -6,10 +6,6 @@
  * Date: 13.12.2016
  * Time: 13:14
  */
-require_once('classes' . DIRECTORY_SEPARATOR . 'defines' . DIRECTORY_SEPARATOR . 'user.def.php');
-require_once('classes' . DIRECTORY_SEPARATOR . 'helper' . DIRECTORY_SEPARATOR . 'friends.php');
-require_once('classes' . DIRECTORY_SEPARATOR . 'helper' . DIRECTORY_SEPARATOR . 'favorites.php');
-require_once('classes' . DIRECTORY_SEPARATOR . 'helper' . DIRECTORY_SEPARATOR . 'locationModel.php');
 
 class UserModel {
 
@@ -134,6 +130,8 @@ class UserModel {
     }
 
     public function userLogin($userInput) {
+        // Damit beim Login eine neue Session_ID generiert wird.
+        session_regenerate_id();
         $userInput = json_decode($userInput);
         if (isset($userInput->email) && isset($userInput->password)) {
             $email = Database::getDB()->escape($userInput->email);

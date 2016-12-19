@@ -7,8 +7,6 @@
  * Time: 08:58
  */
 
-require_once('classes' . DIRECTORY_SEPARATOR . 'defines' . DIRECTORY_SEPARATOR . 'user.def.php');
-
 class Friends {
 
     /**

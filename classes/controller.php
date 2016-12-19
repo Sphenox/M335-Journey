@@ -6,8 +6,6 @@
  * Date: 13.12.2016
  * Time: 11:49
  */
-require_once('classes' . DIRECTORY_SEPARATOR . 'helper' . DIRECTORY_SEPARATOR . 'userModel.php');
-
 class Controller {
 
     private $model;
@@ -31,27 +29,22 @@ class Controller {
                         $this->response = $userModel->getUser();
                         break;
                     case 'getJourney':
-                        require_once('classes' . DIRECTORY_SEPARATOR . 'helper' . DIRECTORY_SEPARATOR . 'locationModel.php');
                         $locModel = new LocationModel();
                         $this->response = $locModel->callGetLocation($frontJson);
 
                         break;
                     case 'getJourneys':
-                        require_once('classes' . DIRECTORY_SEPARATOR . 'helper' . DIRECTORY_SEPARATOR . 'locationModel.php');
                         $locModel = new LocationModel();
                         $this->response = $locModel->callGetLocations($userId);
                         break;
                     case 'newJourney':
-                        require_once('classes' . DIRECTORY_SEPARATOR . 'helper' . DIRECTORY_SEPARATOR . 'locationModel.php');
                         $locModel = new LocationModel();
                         break;
                     case 'getFavorites':
-                        require_once('classes' . DIRECTORY_SEPARATOR . 'helper' . DIRECTORY_SEPARATOR . 'favorites.php');
                         $fav = new Favorites();
                         $this->response = $fav->callGetFavorites($userId);
                         break;
                     case 'toggleFavorite':
-                        require_once('classes' . DIRECTORY_SEPARATOR . 'helper' . DIRECTORY_SEPARATOR . 'favorites.php');
                         $fav = new Favorites();
                         $this->response = $fav->toggleFavorite($frontJson);
                         break;

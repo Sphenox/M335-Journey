@@ -6,8 +6,6 @@
  * Date: 13.12.2016
  * Time: 14:09
  */
-require_once('classes' . DIRECTORY_SEPARATOR . 'defines' . DIRECTORY_SEPARATOR . 'location.def.php');
-require_once('classes' . DIRECTORY_SEPARATOR . 'helper' . DIRECTORY_SEPARATOR . 'favorites.php');
 
 class LocationModel {
 
