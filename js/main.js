@@ -171,7 +171,7 @@ journeyApp.controller('ImageViewController', function($scope, $http) {
 journeyApp.controller('FavoritesController', function($scope, $http) {
     $http.get('../services.php?action=getFavorites').then(function(response) {
         if (response.data.status == 1) {
-            $scope.uploads = response.data;
+            $scope.uploads = response.data.uploads;
         } else {
             Materialize.toast('Ups something went wrong! Couldn\'t load pictures.', 4000);
         }
@@ -255,8 +255,19 @@ journeyApp.controller('AllPlacesController', function($scope, $http) {
 });
 
 journeyApp.controller('NewPictureFormController', function($scope, $http) {
-    initialize(0, 0, [], 1);
+    var options = {
+        enableHighAccuracy: true
+    };
 
+    navigator.geolocation.getCurrentPosition(function(pos) {
+            $scope.position = { "lat": pos.coords.latitude, "lng": pos.coords.longitude };
+            var _markers = new Array();
+            _markers.push(new google.maps.LatLng($scope.position.lat, $scope.position.lng));
+            initialize($scope.position.lat, $scope.position.lng, _markers, 12);
+        },
+        function(error) {
+            Materialize.toast('Ups something went wrong! Failed to get location.', 4000);
+        }, options);
     $scope.submit = function() {
         var request = $http({
             method: "post",
