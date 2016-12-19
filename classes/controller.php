@@ -18,29 +18,30 @@ class Controller {
         if (isset($GET['action'])) {
             // Die Daten, welche wir vom Frontend bekommen
             $frontJson = file_get_contents('php://input');
+            // Das UserModel Objekt instanzieren
+            $userModel = new UserModel();
+            $userId = $userModel->getUserToDisplay($frontJson);
 
             switch ($GET['action']) {
                 case 'showUser':
-                    $userModel = new UserModel();
-                    $userId = $userModel->getUserToDisplay($frontJson);
                     if ($userId !== false) {
                         $userModel->readFullUser($userId);
                     }
                     $this->response = $userModel->getUser();
                     break;
                 case 'getJourney':
+                    require_once('classes' . DIRECTORY_SEPARATOR . 'helper' . DIRECTORY_SEPARATOR . 'locationModel.php');
+                    $locModel = new LocationModel();
+                    $this->response = $locModel->callGetLocation($frontJson);
+
                     break;
                 case 'getJourneys':
-                    $userModel = new UserModel();
-                    $userId = $userModel->getUserToDisplay($frontJson);
                     require_once('classes' . DIRECTORY_SEPARATOR . 'helper' . DIRECTORY_SEPARATOR . 'locationModel.php');
                     $locModel = new LocationModel();
                     $this->response = $locModel->callGetLocations($userId);
                     break;
                 case 'getFavorites':
                     require_once('classes' . DIRECTORY_SEPARATOR . 'helper' . DIRECTORY_SEPARATOR . 'favorites.php');
-                    $userModel = new UserModel();
-                    $userId = $userModel->getUserToDisplay($frontJson);
                     $fav = new Favorites();
                     $this->response = $fav->callGetFavorites($userId);
                     break;
@@ -50,11 +51,9 @@ class Controller {
                     $this->response = $fav->toggleFavorite($frontJson);
                     break;
                 case 'registration':
-                    $userModel = new UserModel();
                     $this->response = $userModel->newUser($frontJson);
                     break;
                 case 'login':
-                    $userModel = new UserModel();
                     $this->response = $userModel->userLogin($frontJson);
                     break;
                 case 'logout':
