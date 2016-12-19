@@ -247,6 +247,12 @@ journeyApp.controller('AllPlacesController', function($scope, $http) {
     });
 });
 
+journeyApp.controller('NewPictureFormController', function($scope, $http) {
+    $scope.createPicture = function() {
+
+    }
+});
+
 function initialize(_lat, _lng, _markers, _zoom = 8) {
     map = null;
     map = new google.maps.Map(document.getElementById('modal-map'), {
