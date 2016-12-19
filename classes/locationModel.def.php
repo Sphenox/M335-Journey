@@ -12,7 +12,7 @@ class LocationModel {
 
 
     public function getLocationsFromUser($userId) {
-        $result = Database::getDB()->query("SELECT * FROM locations WHERE FKuser = ".$userId);
+        $result = Database::getDB()->query('CALL getAllLocationFromUser('.$userId.')');
         $locations = [];
         foreach ($result as $location) {
             $locationObj = new Location();
