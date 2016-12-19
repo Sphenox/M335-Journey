@@ -38,15 +38,17 @@ class UserModel {
      */
     public function getUserToDisplay($frontJson) {
         $json = json_decode($frontJson);
-        if (!isset($json->id) && isset($_SESSION['userId'])) {
-            $userId = $_SESSION['userId'];
-        }
-        else if (isset($json->id) && intval($json->id)) {
-            $userId = $json->id;
+        if (isset($_SESSION['userId'])) {
+            if (!isset($json->id)) {
+                $userId = $_SESSION['userId'];
+            }
+            else {
+                $userId = $json->id;
+            }
         }
         else {
             $this->user['status'] = '0';
-            $this->user['statusText'] = 'User is not logged in.';
+            $this->user['statusText'] = 'Access denied.';
             return false;
         }
         return $userId;
