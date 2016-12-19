@@ -1,5 +1,5 @@
 var map;
-var marker;
+var markers;
 $(document).ready(function() {
     //Side Navigation initialize
     $('.button-collapse').sideNav({
@@ -8,6 +8,7 @@ $(document).ready(function() {
         closeOnClick: true,
         draggable: true
     });
+    markers = new Array();
     $('.modal').modal();
 });
 var journeyApp = new angular.module('journeyApp', []);
@@ -19,7 +20,6 @@ journeyApp.controller('MenuController', function($scope, $http) {
     });
     request.then(
         function successCallback(response) {
-            console.log(response);
             if (response.data.status == 1) {
                 $('#menu-username').text(response.data.prename + " " + response.data.name);
                 $('#menu-email').text(response.data.email);
@@ -55,7 +55,7 @@ journeyApp.controller('MenuController', function($scope, $http) {
 });
 
 journeyApp.controller('AllPicturesController', function($scope, $http) {
-    /*$http.get('../services.php?action=getJourneys', function(response) {
+    /*$http.get('../services.php?action=getJourneys').then(function(response) {
         if (response.data.status == 1) {
             $scope.uploads = response.data.uploads;
         } else {
@@ -106,7 +106,10 @@ journeyApp.controller('AllPicturesController', function($scope, $http) {
                 } else {
                     $('#modal-favorite').text('star');
                 }
-                initialize(response.data.lat, response.data.lng);
+                deleteMarkers()
+                var _markers = new Array();
+                _markers.push(new google.maps.LatLng(response.data.lat, response.data.lng));
+                initialize(response.data.lat, response.data.lng, _markers);
                 $('#imageView').modal('open');
             } else {
                 Materialize.toast('Ups something went wrong! Couldn\'t load pictures.', 4000);
@@ -123,7 +126,10 @@ journeyApp.controller('AllPicturesController', function($scope, $http) {
         } else {
             $('#modal-favorite').text('star');
         }
-        initialize(46.818188, 8.227512);
+        deleteMarkers()
+        var _markers = new Array();
+        _markers.push(new google.maps.LatLng(46.818188, 8.227512));
+        initialize(46.818188, 8.227512, _markers);
         $('#imageView').modal('open');
     };
 });
@@ -156,7 +162,7 @@ journeyApp.controller('ImageViewController', function($scope, $http) {
 });
 
 journeyApp.controller('FavoritesController', function($scope, $http) {
-    /*$http.get('../services.php?action=getFavorites', function(response) {
+    /*$http.get('../services.php?action=getFavorites').then(function(response) {
         if (response.data.status == 1) {
             $scope.uploads = response.data.uploads;
         } else {
@@ -198,7 +204,10 @@ journeyApp.controller('FavoritesController', function($scope, $http) {
                 } else {
                     $('#modal-favorite').text('star');
                 }
-                initialize(response.data.lat, response.data.lng);
+                deleteMarkers();
+                var _markers = new Array();
+                _markers.push(new google.maps.LatLng(response.data.lat, response.data.lng));
+                initialize(response.data.lat, response.data.lng, _markers);
                 $('#imageView').modal('open');
             } else {
                 Materialize.toast('Ups something went wrong! Couldn\'t load pictures.', 4000);
@@ -215,48 +224,52 @@ journeyApp.controller('FavoritesController', function($scope, $http) {
         } else {
             $('#modal-favorite').text('star');
         }
-        initialize(46.818188, 8.227512);
+        deleteMarkers();
+        var _markers = new Array();
+        _markers.push(new google.maps.LatLng(46.818188, 8.227512));
+        initialize(46.818188, 8.227512, _markers);
         $('#imageView').modal('open');
     };
 });
 
 journeyApp.controller('AllPlacesController', function($scope, $http) {
-    $http.get('../services.php?action=getJourneys', function(response) {
+    $http.get('../services.php?action=getJourneys').then(function(response) {
+        console.log("Test2");
         if (response.data.status == 1) {
+            var _markers = new Array();
             $.each(response.data.uploads, function(index, upload) {
-
+                _markers.push(new google.maps.LatLng(upload.lat, upload.lng));
             });
+            initialize(0, 0, _markers, 1);
         } else {
             Materialize.toast('Ups something went wrong! Couldn\'t load pictures.', 4000);
         }
     });
 });
 
-function initialize(_lat, _lng) {
+function initialize(_lat, _lng, _markers, _zoom = 8) {
     map = null;
     map = new google.maps.Map(document.getElementById('modal-map'), {
-        zoom: 8,
+        zoom: _zoom,
         center: new google.maps.LatLng(_lat, _lng),
         mapTypeId: google.maps.MapTypeId.ROADMAP
     });
-    setMarker(new google.maps.LatLng(_lat, _lng));
+    $.each(_markers, function(index, marker) {
+        setMarker(marker);
+    });
     google.maps.event.addListenerOnce(map, 'idle', function() {
         google.maps.event.trigger(map, 'resize');
     });
 }
 
 function setMarker(location) {
-    deleteMarker();
     newMarker = new google.maps.Marker({
         position: location,
         map: map
     });
-    marker = newMarker;
+    markers.push(newMarker);
 }
 
-function deleteMarker() {
-    if (marker && map) {
-        marker.setMap(map);
-        marker = {};
-    }
+function deleteMarkers() {
+    markers = new Array();
 }
