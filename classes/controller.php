@@ -7,6 +7,7 @@
  * Time: 11:49
  */
 require_once('classes' . DIRECTORY_SEPARATOR . 'helper' . DIRECTORY_SEPARATOR . 'userModel.php');
+
 class Controller {
 
     private $model;
@@ -22,7 +23,7 @@ class Controller {
                 case 'showUser':
                     $userModel = new UserModel();
                     $userId = $userModel->getUserToDisplay($frontJson);
-                    if($userId !== false) {
+                    if ($userId !== false) {
                         $userModel->readFullUser($userId);
                     }
                     $this->response = $userModel->getUser();
@@ -34,21 +35,13 @@ class Controller {
                     $userId = $userModel->getUserToDisplay($frontJson);
                     require_once('classes' . DIRECTORY_SEPARATOR . 'helper' . DIRECTORY_SEPARATOR . 'locationModel.php');
                     $locModel = new LocationModel();
-                    if($userId !== false) {
-                        $this->response = $locModel->getLocationsFromUser($userId);
-                        $this->response['status'] = '1';
-                        $this->response['statusText'] = '';
-                    }
-                    else {
-                        $this->response['status'] = '0';
-                        $this->response['statusText'] = 'User id is not set.';
-                    }
+                    $this->response = $locModel->callGetLocations($userId);
                     break;
                 case 'getFavorites':
                     require_once('classes' . DIRECTORY_SEPARATOR . 'helper' . DIRECTORY_SEPARATOR . 'favorites.php');
                     $userModel = new UserModel();
                     $userId = $userModel->getUserToDisplay($frontJson);
-                    if($userId !== false) {
+                    if ($userId !== false) {
                         $this->response = Favorites::getFavoritesFromId($userId);
                         $this->response['status'] = '1';
                         $this->response['statusText'] = '';

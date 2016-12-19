@@ -6,7 +6,7 @@
  * Time: 10:42
  */
 
-require_once('classes' . DIRECTORY_SEPARATOR . 'helper' . DIRECTORY_SEPARATOR . 'database.def.php');
+require_once('classes' . DIRECTORY_SEPARATOR . 'helper' . DIRECTORY_SEPARATOR . 'database.php');
 require_once('classes' . DIRECTORY_SEPARATOR . 'controller.php');
 
 $controller = new Controller($_GET);

@@ -28,4 +28,17 @@ class LocationModel {
         }
         return $locations;
     }
+
+    public function callGetLocations($userId) {
+        if($userId != false){
+            $response['uploads'] = $this->getLocationsFromUser($userId);
+            $response['status'] = '1';
+            $response['statusText'] = '';
+        }
+        else {
+            $response['status'] = '0';
+            $response['statusText'] = 'User id is not set.';
+        }
+        return $response;
+    }
 }
