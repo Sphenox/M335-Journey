@@ -1,7 +1,7 @@
 --Users
-Insert into journey.users (name, prename , email , password , description , userImage) VALUES ("Sinnathurai","Arjuna","arjuna1997@windowslive.com","3efb213f649117caaec085d7c32e4c39","Bist du braun kriegst du Fraun","1-sinnathurai.jpg");
-Insert into journey.users (name, prename , email , password , description , userImage) VALUES ("Wahl","Florian","wafl@hotmail.com","cb0094eb894989b7d6b4a470f539d57d","WUFF MIAU","2-wahl.jpg");
-Insert into journey.users (name, prename , email , password , description , userImage) VALUES ("Pfister","Tim","timpfister@gmail.com","dd21032795b405428e39761382adbb2e","SIGOI","3-pfister.jpg");
+Insert into journey.users (name, prename , email , password , description , userImage) VALUES ("Sinnathurai","Arjuna","arjuna@journey.ch","d404559f602eab6fd602ac7680dacbfaadd13630335e951f097af3900e9de176b6db28512f2e000b9d04fba5133e8b1c6e8df59db3a8ab9d60be4b97cc9e81db","Bist du braun kriegst du Fraun","1-sinnathurai.jpg");
+Insert into journey.users (name, prename , email , password , description , userImage) VALUES ("Wahl","Florian","flo@journey.ch","d404559f602eab6fd602ac7680dacbfaadd13630335e951f097af3900e9de176b6db28512f2e000b9d04fba5133e8b1c6e8df59db3a8ab9d60be4b97cc9e81db","WUFF MIAU","2-wahl.jpg");
+Insert into journey.users (name, prename , email , password , description , userImage) VALUES ("Pfister","Tim","tim@journey.ch","d404559f602eab6fd602ac7680dacbfaadd13630335e951f097af3900e9de176b6db28512f2e000b9d04fba5133e8b1c6e8df59db3a8ab9d60be4b97cc9e81db","SIGOI","3-pfister.jpg");
 --Friends
 INSERT into journey.friends (FKuser1 , FKuser2) VALUES (1,2);
 INSERT into journey.friends (FKuser1 , FKuser2) VALUES (2,3);
