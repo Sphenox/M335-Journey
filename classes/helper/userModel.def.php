@@ -99,7 +99,7 @@ class UserModel {
                 $return['statusText'] = 'This email is already in use.';
                 return $return;
             }
-            $userInput->password = hash('sha512', $userInput['password']);
+            $userInput['password'] = hash('sha512', $userInput['password']);
             $response = Database::getDB()->insert('users', $userInput);
             if ($response) {
                 $userId = Database::getDB()->getLastInsertId();
