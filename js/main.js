@@ -263,7 +263,7 @@ journeyApp.controller('NewPictureFormController', function($scope, $http) {
             datat: {}
         });
         request.then(function successCallback(response) {
-            window.
+            window.location = '../html/allPictures.html';
         }, function errorCallback(response) {
             Materialize.toast('Ups something went wrong! Couldn\'t create picture.', 4000);
         });
