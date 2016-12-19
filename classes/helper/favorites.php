@@ -5,7 +5,7 @@
  * Date: 13.12.2016
  * Time: 11:32
  */
-require_once('classes' . DIRECTORY_SEPARATOR . 'location.def.php');
+require_once('classes' . DIRECTORY_SEPARATOR . 'defines' . DIRECTORY_SEPARATOR . 'location.def.php');
 
 class Favorites {
 
@@ -17,12 +17,18 @@ class Favorites {
             foreach ($favorite as $field => $data) {
                 // Jeder Favorit in ein Location Objekt einfüllen
                 $location->$field = $data;
+                $location->favorite = self::isFavorite($userId, $location->id);
             }
             $favoritesList[] = $location;
         }
         return $favoritesList;
     }
 
+    /**
+     * @param $userId
+     * @param $locId
+     * @return mixed
+     */
     public static function isFavorite($userId, $locId) {
         $result = Database::getDB()->query('CALL checkIfFavoured(' . $userId . ', ' . $locId . ')');
         return $result[0]['isFavoured'];
@@ -91,6 +97,20 @@ class Favorites {
             $response['status'] = '0';
             $response['statusText'] = 'There was an unknown error while removing the Favorite.';
         }
+        return $response;
+    }
+
+    public function callGetFavorites($userId) {
+        if ($userId !== false) {
+            $response['uploads'] = self::getFavoritesFromId($userId);
+            $response['status'] = '1';
+            $response['statusText'] = '';
+        }
+        else {
+            $response['status'] = '0';
+            $response['statusText'] = 'User id is not set.';
+        }
+
         return $response;
     }
 
