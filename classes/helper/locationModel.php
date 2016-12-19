@@ -45,24 +45,26 @@ class LocationModel {
     public function callGetLocation($frontJson){
         $json = json_decode($frontJson);
         $locationObj = new Location();
-
-        if(isset($frontJson->id) && intval($frontJson->id) != 0){
-            $result = Database::getDB()->query('CALL getLocation(\''.$frontJson->id.'\');');
+        if(isset($json->id) && intval($json->id) != 0){
+            $result = Database::getDB()->query('CALL getLocation(\''.$json->id.'\');');
             if($result != false){
                 foreach($result[0] as $field => $data) {
                     $locationObj->$field = $data;
                     $locationObj->favorite = Favorites::isFavorite($result[0]['FKuser'], $result[0]['id']);
                 }
                 $response = $locationObj;
-                $response['status'] = '1';
-                $response['statusText'] = '';
+                $response->status = '1';
+                $response->statusText = '';
             }
             else {
                 $response['status'] = '0';
-                $response['statusText'] = 'Journey with ID '.$frontJson->id.' does not exists.';
+                $response['statusText'] = 'Journey with ID '.$json->id.' does not exists.';
             }
-
-            return $response;
         }
+        else {
+            $response['status'] = '0';
+            $response['statusText'] = 'JSON is not valid.';
+        }
+        return $response;
     }
 }
