@@ -62,3 +62,11 @@ BEGIN
 	AND ((loc.FKuser = friends.id AND loc.visible = "all")
 	OR (loc.visible = "friends" AND friendID IN (SELECT u.id FROM journey.users as u RIGHT JOIN journey.friends as f ON ((inId = f.FKuser1 AND f.FKuser2 = u.id ) OR ( inId = f.Fkuser2 AND f.FKuser1 = u.id))WHERE u.id != inId)));
 END;
+CREATE PROCEDURE checkIfFavoured
+(IN inId INT(11) , IN inLocation INT(11))
+BEGIN
+	SELECT IF(COUNT(*) > 0 , 'true' , 'false') FROM journey.users as u , journey.favorites as fav , journey.locations as loc
+	WHERE fav.FKuser = u.id
+	 AND fav.fklocation = inLocation
+    AND u.id = inID;
+END;
