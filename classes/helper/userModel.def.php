@@ -95,39 +95,44 @@ class UserModel {
         // Wurden alle nötigen daten uebergeben?
         if (isset($userInput['email']) && isset($userInput['password']) && isset($userInput['name']) && isset($userInput['prename'])) {
             if (!$this->emailInUse($userInput['email'])) {
-                $return['status'] = '0';
-                $return['statusText'] = 'This email is already in use.';
-                return $return;
+                $response['status'] = '0';
+                $response['statusText'] = 'This email is already in use.';
+                return $response;
             }
-            $userInput['password'] = hash('sha512', $userInput['password']);
-            $response = Database::getDB()->insert('users', $userInput);
-            if ($response) {
+            $dbInsert['password'] = hash('sha512', $userInput['password']);
+            $dbInsert['email'] = $userInput['email'];
+            $dbInsert['name'] = $userInput['name'];
+            $dbInsert['prename'] = $userInput['prename'];
+            $dbReturn = Database::getDB()->insert('users', $dbInset);
+            if ($dbReturn) {
                 $userId = Database::getDB()->getLastInsertId();
                 $_SESSION['userId'] = $userId;
                 // Das Profilbild am richtigen Ort abspeichern
                 $fileUpload = new Images();
-                $filePath = $fileUpload->copyUserImage($_FILES['file'], $userId . '-' . $userInput['name']);
-                if($filePath != false){
+                $filePath = $fileUpload->copyImage($_FILES['file'], 'files/user/' . $userId . '-' . $userInput['name']);
+                if ($filePath != false) {
                     // Den Pfad zum Bild in der DB speichern.
-                    Database::getDB()->update('users',['userImage'=>$filePath], 'id = '.$userId);
-                    $return['status'] = '1';
-                    $return['statusText'] = 'User is successfully created.';
+                    Database::getDB()->update('users', ['userImage' => $filePath], 'id = ' . $userId);
+                    $response['status'] = '1';
+                    $response['statusText'] = 'User is successfully created.';
                 }
                 else {
-                    $return['status'] = '0';
-                    $return['statusText'] = 'There was an error while saving the image.';
+                    // Den User wieder löschen, da das Bild nicht gespeichert wurde
+                    Database::getDB()->delete('DELETE FORM users WHERE id = ' . $userId);
+                    $response['status'] = '0';
+                    $response['statusText'] = 'There was an error while saving the image.';
                 }
             }
             else {
-                $return['status'] = '0';
-                $return['statusText'] = 'There was an error while creating the user.';
+                $response['status'] = '0';
+                $response['statusText'] = 'There was an error while creating the user.';
             }
         }
         else {
-            $return['status'] = '0';
-            $return['statusText'] = 'The transferred data is not correct.';
+            $response['status'] = '0';
+            $response['statusText'] = 'The transferred data is not correct.';
         }
-        return $return;
+        return $response;
     }
 
     /**

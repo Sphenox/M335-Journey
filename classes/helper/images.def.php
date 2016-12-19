@@ -8,19 +8,19 @@
  */
 class Images {
 
-    private $UserImagePath = 'files/user/';
-
-    public function copyUserImage($file, $newName) {
+    public function copyImage($file, $newPath) {
         if(isset($file['tmp_name']) && isset($file['name'])){
             $tmpPath = $file['tmp_name'];
             if(file_exists($tmpPath)){
-                $newPath = $this->UserImagePath . $newName .'.'.$this->getImgType($file['name']);
+                // Den File-Typ noch auslesen
+                $newPath = $newPath.'.'.$this->getImgType($file['name']);
                 copy($tmpPath, $newPath);
                 return $newPath;
             }
         }
         return false;
     }
+
 
     public function getImgType($fileName) {
         return pathinfo($fileName,PATHINFO_EXTENSION);

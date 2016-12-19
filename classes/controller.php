@@ -31,7 +31,6 @@ class Controller {
                     case 'getJourney':
                         $locModel = new LocationModel();
                         $this->response = $locModel->callGetLocation($frontJson);
-
                         break;
                     case 'getJourneys':
                         $locModel = new LocationModel();
@@ -39,6 +38,8 @@ class Controller {
                         break;
                     case 'newJourney':
                         $locModel = new LocationModel();
+                        $locModel->newLocation($_POST);
+
                         break;
                     case 'getFavorites':
                         $fav = new Favorites();

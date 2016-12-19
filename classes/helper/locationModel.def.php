@@ -6,7 +6,6 @@
  * Date: 13.12.2016
  * Time: 14:09
  */
-
 class LocationModel {
 
     /**
@@ -28,7 +27,7 @@ class LocationModel {
     }
 
     public function callGetLocations($userId) {
-        if($userId != false){
+        if ($userId != false) {
             $response['uploads'] = $this->getLocationsFromUser($userId);
             $response['status'] = '1';
             $response['statusText'] = '';
@@ -40,13 +39,13 @@ class LocationModel {
         return $response;
     }
 
-    public function callGetLocation($frontJson){
+    public function callGetLocation($frontJson) {
         $json = json_decode($frontJson);
         $locationObj = new Location();
-        if(isset($json->id) && intval($json->id) != 0){
-            $result = Database::getDB()->query('CALL getLocation(\''.$json->id.'\');');
-            if($result != false){
-                foreach($result[0] as $field => $data) {
+        if (isset($json->id) && intval($json->id) != 0) {
+            $result = Database::getDB()->query('CALL getLocation(\'' . $json->id . '\');');
+            if ($result != false) {
+                foreach ($result[0] as $field => $data) {
                     $locationObj->$field = $data;
                     $locationObj->favorite = Favorites::isFavorite($result[0]['FKuser'], $result[0]['id']);
                 }
@@ -56,7 +55,7 @@ class LocationModel {
             }
             else {
                 $response['status'] = '0';
-                $response['statusText'] = 'Journey with ID '.$json->id.' does not exists.';
+                $response['statusText'] = 'Journey with ID ' . $json->id . ' does not exists.';
             }
         }
         else {
@@ -64,5 +63,44 @@ class LocationModel {
             $response['statusText'] = 'JSON is not valid.';
         }
         return $response;
+    }
+
+    /**
+     * @param $userInput
+     */
+    public function newLocation($userInput) {
+        // Sind alle Daten korrekt übergeben worden?
+        if (isset($userInput['lat']) && isset($userInput['lng']) && isset($userInput['comment'])) {
+            // Die benötigten Daten abfüllen, damit nichts falsches in die DB geschrieben wird.
+            $dbInsert['lat'] = $userInput['lat'];
+            $dbInsert['lng'] = $userInput['lng'];
+            $dbInsert['comment'] = $userInput['comment'];
+            $dbReturn = Database::getDB()->insert('locations', $dbInsert);
+            if ($dbReturn) {
+                $locId = Database::getDB()->getLastInsertId();
+                $fileUpload = new Images();
+                $filePath = $fileUpload->copyImage($_FILES['file'], 'files/location/');
+                if ($filePath != false) {
+                    // Den Pfad in der DB speichern
+                    Database::getDB()->update('users', ['userImage' => $filePath], 'id = ' . $locId);
+                    $response['status'] = '1';
+                    $response['statusText'] = 'Journey is successfully created.';
+                }
+                else {
+                    // Location wieder löschen, da das Bild nicht gespeichert wurde.
+                    Database::getDB()->delete('DELETE FROM locations WHERE id = ' . $locId);
+                    $response['status'] = '0';
+                    $response['statusText'] = 'There was an error while saving the image.';
+                }
+            }
+            else {
+                $response['status'] = '0';
+                $response['statusText'] = 'There was an error while creating the Journey.';
+            }
+        }
+        else {
+            $response['status'] = '0';
+            $response['statusText'] = 'The transferred data is not correct.';
+        }
     }
 }
