@@ -96,10 +96,10 @@ journeyApp.controller('AllPicturesController', function($scope, $http) {
     ];*/
 
     $scope.openImage = function(card) {
-        /*$http.post('../services.php?action=getJourney', { id: card.data.id }, {
+        $http.post('../services.php?action=getJourney', { id: card.upload.id }, {
             headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;' }
         }).then(function successCallback(response) {
-            if (response.status == 1 && response.data.status == 1) {
+            if (response.status == 200 && response.data.status == 1) {
                 $('#modal-id').val(response.data.id);
                 $('#modal-comment').text(response.data.comment);
                 $('#modal-image').attr('src', response.data.image);
@@ -117,10 +117,10 @@ journeyApp.controller('AllPicturesController', function($scope, $http) {
                 Materialize.toast('Ups something went wrong! Couldn\'t load pictures.', 4000);
                 return false;
             }
-        });*/
+        });
 
         //Beispieldaten --> nach Anbindung an Backend entfernen!
-        $('#modal-id').val(1243);
+        /*$('#modal-id').val(1243);
         $('#modal-comment').text('irgend ein Text');
         $('#modal-image').attr('src', '../img/298.jpg');
         if (1) {
@@ -132,17 +132,17 @@ journeyApp.controller('AllPicturesController', function($scope, $http) {
         var _markers = new Array();
         _markers.push(new google.maps.LatLng(46.818188, 8.227512));
         initialize(46.818188, 8.227512, _markers);
-        $('#imageView').modal('open');
+        $('#imageView').modal('open');*/
     };
 });
 
 journeyApp.controller('ImageViewController', function($scope, $http) {
     $scope.toFavorite = function(card) {
-
-        /*$http.post('../services.php?action=setFavorite', { id: card.data.id }, {
+        console.log(card);
+        $http.post('../services.php?action=toggleFavorite', { id: card.upload.id }, {
             headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;' }
         }).then(function successCallback(response) {
-            if (response.status == 1 && response.data.status == 1) {
+            if (response.status == 200 && response.data.status == 1) {
                 if ($('#modal-favorite').text() == "star") {
                     $('#modal-favorite').text('star_border');
                 } else {
@@ -152,14 +152,14 @@ journeyApp.controller('ImageViewController', function($scope, $http) {
                 Materialize.toast('Ups something went wrong! Couldn\'t load pictures.', 4000);
                 return false;
             }
-        });*/
+        });
 
         //Beispieldaten --> nach Anbindung an Backend entfernen!
-        if ($('#modal-favorite').text() == "star") {
+        /*if ($('#modal-favorite').text() == "star") {
             $('#modal-favorite').text('star_border');
         } else {
             $('#modal-favorite').text('star');
-        }
+        }*/
     }
 });
 
@@ -194,10 +194,12 @@ journeyApp.controller('FavoritesController', function($scope, $http) {
     ];*/
 
     $scope.openImage = function(card) {
-        /*$http.post('../services.php?action=getJourney', { id: card.data.id }, {
+        console.log(card);
+        $http.post('../services.php?action=getJourney', { "id": card.upload.id }, {
             headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;' }
         }).then(function successCallback(response) {
-            if (response.status == 1 && response.data.status == 1) {
+            if (response.status == 200 && response.data.status == 1) {
+                console.log(response);
                 $('#modal-id').val(response.data.id);
                 $('#modal-comment').text(response.data.comment);
                 $('#modal-image').attr('src', response.data.image);
@@ -212,13 +214,14 @@ journeyApp.controller('FavoritesController', function($scope, $http) {
                 initialize(response.data.lat, response.data.lng, _markers);
                 $('#imageView').modal('open');
             } else {
+                console.log(response);
                 Materialize.toast('Ups something went wrong! Couldn\'t load pictures.', 4000);
                 return false;
             }
-        });*/
+        });
 
         //Beispieldaten --> nach Anbindung an Backend entfernen!
-        $('#modal-id').val(1243);
+        /*$('#modal-id').val(1243);
         $('#modal-comment').text('irgend ein Text');
         $('#modal-image').attr('src', '../img/298.jpg');
         if (1) {
@@ -230,7 +233,7 @@ journeyApp.controller('FavoritesController', function($scope, $http) {
         var _markers = new Array();
         _markers.push(new google.maps.LatLng(46.818188, 8.227512));
         initialize(46.818188, 8.227512, _markers);
-        $('#imageView').modal('open');
+        $('#imageView').modal('open');*/
     };
 });
 

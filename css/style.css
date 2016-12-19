@@ -18,10 +18,7 @@
     max-width: 100%;
 }
 
-#modal-favorite {
-    cursor: pointer;
-}
-
+#modal-favorite,
 #sidenav-trigger {
     cursor: pointer;
 }
