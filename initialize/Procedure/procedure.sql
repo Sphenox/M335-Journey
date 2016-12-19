@@ -65,7 +65,7 @@ END;
 CREATE PROCEDURE checkIfFavoured
 (IN inId INT(11) , IN inLocation INT(11))
 BEGIN
-	SELECT IF(COUNT(*) > 0 , 'true' , 'false') FROM journey.users as u , journey.favorites as fav , journey.locations as loc
+	SELECT IF(COUNT(*) > 0 , 'true' , 'false') AS isFavoured FROM journey.users as u , journey.favorites as fav , journey.locations as loc
 	WHERE fav.FKuser = u.id
 	 AND fav.fklocation = inLocation
     AND u.id = inID;
