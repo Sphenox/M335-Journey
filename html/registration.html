@@ -18,13 +18,15 @@
     <script type="text/javascript" src="../vendor/materialize/js/materialize.min.js"></script>
     <!--Import AngularJs -->
     <script type="text/javascript" src="../vendor/angularjs/angular.min.js"></script>
+    <!--Import AngularJS Fileupload-->
+    <script type="text/javascript " src="../vendor/ng-file-upload/ng-file-upload.min.js"></script>
     <!--Import Custom JS -->
     <script type="text/javascript" src="../js/registration.js"></script>
 </head>
 
 <body>
     <div id="register-form-wrapper" class="row" ng-controller="RegistrationFormController">
-        <form id="register-form" class="col s12" ng-submit="submit()">
+        <form id="register-form" class="col s12" ng-submit="submit(picFile)">
             <h3 class="center-align blue-text">create a new user</h3>
             <div class="row">
                 <div class="input-field col s12">
@@ -61,7 +63,7 @@
                     <div class="file-field input-field">
                         <div class="btn">
                             <span>Profile Image</span>
-                            <input type="file">
+                            <input type="file" ngf-select ng-model="picFile" name="file" accept="image/*" ngf-max-size="2MB">
                         </div>
                         <div class="file-path-wrapper">
                             <input class="file-path validate" type="text" required>
