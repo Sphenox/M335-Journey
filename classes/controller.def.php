@@ -62,9 +62,6 @@ class Controller {
                     break;
                 case 'logout':
                     session_unset();
-                    echo '<pre>';
-                    print_r($this->response);
-                    echo '</pre>';
                     $this->response['status'] = '1';
                     $this->response['statusText'] = 'User is logged out Now';
                     break;
