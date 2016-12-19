@@ -254,8 +254,19 @@ journeyApp.controller('AllPlacesController', function($scope, $http) {
 });
 
 journeyApp.controller('NewPictureFormController', function($scope, $http) {
-    $scope.submit = function() {
+    initialize(0, 0, [], 1);
 
+    $scope.submit = function() {
+        var request = $http({
+            method: "post",
+            url: "../services.php?action=newJourney",
+            datat: {}
+        });
+        request.then(function successCallback(response) {
+            window.location = '../html/allPictures.html';
+        }, function errorCallback(response) {
+            Materialize.toast('Ups something went wrong! Couldn\'t create picture.', 4000);
+        });
     }
 });
 

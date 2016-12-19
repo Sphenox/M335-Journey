@@ -33,8 +33,36 @@
         </div>
     </nav>
     <div ng-controller="NewPictureFormController" id="allPlaces-wrapper">
-        <form id="register-form">
-
+        <form id="newPicture-form" ng-submit="submit()" class="col s12">
+            <div class="row">
+                <div class="input-field col s12">
+                    <input id="newPicture-description" type="text" class="validate" required>
+                    <label for="surname">Description</label>
+                </div>
+            </div>
+            <div class="row">
+                <div id="modal-map" style="max-width: 100%; height: 300px;"></div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <div class="file-field input-field">
+                        <div class="btn">
+                            <span>Picture</span>
+                            <input type="file">
+                        </div>
+                        <div class="file-path-wrapper">
+                            <input class="file-path validate" type="text" required>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <button id="register" class="btn blue white-text waves-effect waves-light" type="submit">Register
+                            <i class="material-icons right">send</i>
+                    </button>
+                </div>
+            </div>
         </form>
     </div>
     <ul id="slide-out" class="side-nav" ng-controller="MenuController">
