@@ -10,10 +10,7 @@ require_once('classes' . DIRECTORY_SEPARATOR . 'userModel.def.php');
 class Controller {
 
     private $model;
-    private $response = '{
-                                   "status":"1",
-                                   "statusText":"OKI DOKI"
-                                 }';
+    private $response;
 
     public function __construct($GET) {
         session_start();
@@ -33,6 +30,20 @@ class Controller {
                 case 'getJourney':
                     break;
                 case 'getJourneys':
+                    $userModel = new UserModel();
+                    $userId = $userModel->getUserToDisplay($frontJson);
+                    require_once('classes' . DIRECTORY_SEPARATOR . 'locationModel.def.php');
+                    $locModel = new LocationModel();
+                    if($userId !== false) {
+                        $this->response = $locModel->getLocationsFromUser($userId);
+                        $this->response['status'] = '1';
+                        $this->response['statusText'] = '';
+                    }
+                    else {
+                        $this->response['status'] = '0';
+                        $this->response['statusText'] = 'User id is not set.';
+                    }
+
                     break;
                 case 'getFavorites':
                     break;
@@ -51,6 +62,9 @@ class Controller {
                     break;
                 case 'logout':
                     session_unset();
+                    echo '<pre>';
+                    print_r($this->response);
+                    echo '</pre>';
                     $this->response['status'] = '1';
                     $this->response['statusText'] = 'User is logged out Now';
                     break;

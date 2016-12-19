@@ -23,7 +23,12 @@ class UserModel {
             return get_object_vars($this->user);
         }
         else {
-            return $this->user;
+            if(is_array($this->user)) {
+                return $this->user;
+            }
+            else {
+                return ['status' => '0', 'statusText' => 'Could not read User.'];
+            }
         }
     }
 
@@ -41,7 +46,7 @@ class UserModel {
         }
         else {
             $this->user['status'] = '0';
-            $this->user['statusText'] = 'JSON is not valid';
+            $this->user['statusText'] = 'User is not logged in.';
             return false;
         }
         return $userId;
