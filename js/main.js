@@ -19,11 +19,12 @@ journeyApp.controller('MenuController', function($scope, $http) {
     });
     request.then(
         function successCallback(response) {
+            console.log(response);
             if (response.data.status == 1) {
                 $('#menu-username').val(response.data.prename + " " + response.data.name);
                 $('#menu-email').val(response.data.email);
             } else {
-                window.location = '../html/login.html';
+                Materialize.toast('Ups something went wrong with your profile!', 4000);
             }
         },
         function errorCallback(response) {
