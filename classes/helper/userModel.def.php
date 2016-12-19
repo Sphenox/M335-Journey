@@ -6,7 +6,6 @@
  * Date: 13.12.2016
  * Time: 13:14
  */
-
 class UserModel {
 
     private $user;
@@ -93,20 +92,31 @@ class UserModel {
      * @return array
      */
     public function newUser($userInput) {
-        $userInput = json_decode($userInput);
         // Wurden alle nötigen daten uebergeben?
-        if (isset($userInput->email) && isset($userInput->password) && isset($userInput->name) && isset($userInput->prename)) {
-            if (!$this->emailInUse($userInput->email)) {
+        if (isset($userInput['email']) && isset($userInput['password']) && isset($userInput['name']) && isset($userInput['prename'])) {
+            if (!$this->emailInUse($userInput['email'])) {
                 $return['status'] = '0';
                 $return['statusText'] = 'This email is already in use.';
                 return $return;
             }
-            $userInput->password = hash('sha512', $userInput->password);
+            $userInput->password = hash('sha512', $userInput['password']);
             $response = Database::getDB()->insert('users', $userInput);
             if ($response) {
-                $_SESSION['userId'] = Database::getDB()->getLastInsertId();
-                $return['status'] = '1';
-                $return['statusText'] = 'User is successfully created.';
+                $userId = Database::getDB()->getLastInsertId();
+                $_SESSION['userId'] = $userId;
+                // Das Profilbild am richtigen Ort abspeichern
+                $fileUpload = new Images();
+                $filePath = $fileUpload->copyUserImage($_FILES['file'], $userId . '-' . $userInput['name']);
+                if($filePath != false){
+                    // Den Pfad zum Bild in der DB speichern.
+                    Database::getDB()->update('users',['userImage'=>$filePath], 'id = '.$userId);
+                    $return['status'] = '1';
+                    $return['statusText'] = 'User is successfully created.';
+                }
+                else {
+                    $return['status'] = '0';
+                    $return['statusText'] = 'There was an error while saving the image.';
+                }
             }
             else {
                 $return['status'] = '0';

@@ -49,7 +49,7 @@ class Controller {
                         $this->response = $fav->toggleFavorite($frontJson);
                         break;
                     case 'registration':
-                        $this->response = $userModel->newUser($frontJson);
+                        $this->response = $userModel->newUser($_POST);
                         break;
                     case 'login':
                         $this->response = $userModel->userLogin($frontJson);
