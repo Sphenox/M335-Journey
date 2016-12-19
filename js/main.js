@@ -103,7 +103,7 @@ journeyApp.controller('AllPicturesController', function($scope, $http) {
                 $('#modal-id').val(response.data.id);
                 $('#modal-comment').text(response.data.comment);
                 $('#modal-image').attr('src', response.data.image);
-                if (response.data.favorite == 0) {
+                if (response.data.favorite == "false") {
                     $('#modal-favorite').text('star_border');
                 } else {
                     $('#modal-favorite').text('star');
@@ -137,11 +137,14 @@ journeyApp.controller('AllPicturesController', function($scope, $http) {
 });
 
 journeyApp.controller('ImageViewController', function($scope, $http) {
-    $scope.toFavorite = function(card) {
-        console.log(card);
-        $http.post('../services.php?action=toggleFavorite', { id: card.upload.id }, {
+
+    $scope.toFavorite = function() {
+        var _id = $("#modal-id").val();
+        console.log(_id);
+        $http.post('../services.php?action=toggleFavorite', { id: _id }, {
             headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;' }
         }).then(function successCallback(response) {
+            console.log(response);
             if (response.status == 200 && response.data.status == 1) {
                 if ($('#modal-favorite').text() == "star") {
                     $('#modal-favorite').text('star_border');
@@ -149,8 +152,7 @@ journeyApp.controller('ImageViewController', function($scope, $http) {
                     $('#modal-favorite').text('star');
                 }
             } else {
-                Materialize.toast('Ups something went wrong! Couldn\'t load pictures.', 4000);
-                return false;
+                Materialize.toast('Ups something went wrong! Couldn\'t toggle the favorite.', 4000);
             }
         });
 
