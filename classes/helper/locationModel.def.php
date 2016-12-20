@@ -26,8 +26,8 @@ class LocationModel {
         return $locations;
     }
 
-    public function getAllVisibleLocations($userId){
-        $result = Database::getDB()->query('CALL getAllVisibleLocation('.$userId.')');
+    public function getAllVisibleLocations($userId) {
+        $result = Database::getDB()->query('CALL getAllVisibleLocation(' . $userId . ')');
         $locations = [];
         foreach ($result as $location) {
             $locationObj = new Location();
@@ -35,7 +35,7 @@ class LocationModel {
                 $locationObj->$field = $data;
                 $locationObj->favorite = Favorites::isFavorite($userId, $location['id']);
             }
-            $locations[]= $locationObj;
+            $locations[] = $locationObj;
         }
         return $locations;
     }
@@ -74,7 +74,7 @@ class LocationModel {
             if ($result != false) {
                 foreach ($result[0] as $field => $data) {
                     $locationObj->$field = $data;
-                    if(isset($_SESSION['userId'])) {
+                    if (isset($_SESSION['userId'])) {
                         $locationObj->favorite = Favorites::isFavorite($_SESSION['userId'], $result[0]['id']);
                     }
                     else {
@@ -107,14 +107,14 @@ class LocationModel {
             $dbInsert['lat'] = $userInput['lat'];
             $dbInsert['lng'] = $userInput['lng'];
             $dbInsert['comment'] = $userInput['comment'];
-            if(isset($_SESSION['userId'])){
+            if (isset($_SESSION['userId'])) {
                 $dbInsert['FKuser'] = intval($_SESSION['userId']);
             }
             $dbReturn = Database::getDB()->insert('locations', $dbInsert);
             if ($dbReturn) {
                 $locId = Database::getDB()->getLastInsertId();
                 $fileUpload = new Images();
-                $filePath = $fileUpload->copyImage($_FILES['file'], 'files/location/'.$locId);
+                $filePath = $fileUpload->copyImage($_FILES['file'], 'files/location/' . $locId);
                 if ($filePath != false) {
                     // Den Pfad in der DB speichern
                     Database::getDB()->update('locations', ['image' => $filePath], 'id = ' . $locId);
@@ -136,7 +136,7 @@ class LocationModel {
         else {
             $response['status'] = '0';
             $response['statusText'] = 'The transferred data is not correct.';
-       }
-       return $response;
+        }
+        return $response;
     }
 }
