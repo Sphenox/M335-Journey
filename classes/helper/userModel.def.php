@@ -118,7 +118,7 @@ class UserModel {
                 }
                 else {
                     // Den User wieder löschen, da das Bild nicht gespeichert wurde
-                    Database::getDB()->delete('DELETE FORM users WHERE id = ' . $userId);
+                    Database::getDB()->delete('DELETE FROM users WHERE id = ' . $userId);
                     $response['status'] = '0';
                     $response['statusText'] = 'There was an error while saving the image.';
                 }
