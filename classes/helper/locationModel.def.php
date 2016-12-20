@@ -101,6 +101,7 @@ class LocationModel {
         else {
             $response['status'] = '0';
             $response['statusText'] = 'The transferred data is not correct.';
-        }
+       }
+       return $response;
     }
 }
