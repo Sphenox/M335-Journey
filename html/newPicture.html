@@ -18,6 +18,8 @@
     <script type="text/javascript" src="../vendor/materialize/js/materialize.min.js"></script>
     <!--Import AngularJs -->
     <script type="text/javascript" src="../vendor/angularjs/angular.min.js"></script>
+    <!--Import AngularJS Fileupload-->
+    <script type="text/javascript " src="../vendor/ng-file-upload/ng-file-upload.min.js"></script>
     <!--Import custom JS -->
     <script type="text/javascript" src="../js/main.js"></script>
     <!--Import Google Maps API-->
@@ -33,7 +35,7 @@
         </div>
     </nav>
     <div ng-controller="NewPictureFormController" id="newPicture-wrapper">
-        <form id="newPicture-form" ng-submit="submit()" class="col s12">
+        <form id="newPicture-form" ng-submit="submit(picFile)" class="col s12">
             <div class="row">
                 <div class="input-field col s12">
                     <input id="newPicture-description" type="text" class="validate" required>
@@ -48,7 +50,7 @@
                     <div class="file-field input-field">
                         <div class="btn">
                             <span>Picture</span>
-                            <input type="file">
+                            <input type="file" ngf-select ng-model="picFile" name="file" accept="image/*" ngf-max-size="2MB">
                         </div>
                         <div class="file-path-wrapper">
                             <input class="file-path validate" type="text" required>

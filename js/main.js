@@ -11,7 +11,7 @@ $(document).ready(function() {
     markers = new Array();
     $('.modal').modal();
 });
-var journeyApp = new angular.module('journeyApp', []);
+var journeyApp = new angular.module('journeyApp', ['ngFileUpload']);
 journeyApp.controller('MenuController', function($scope, $http) {
     var request = $http({
         method: "post",
@@ -23,7 +23,7 @@ journeyApp.controller('MenuController', function($scope, $http) {
             if (response.data.status == 1) {
                 $('#menu-username').text(response.data.prename + " " + response.data.name);
                 $('#menu-email').text(response.data.email);
-                $('#menu-image').attr('src', response.data.userImage);
+                $('#menu-image').attr('src', "../" + response.data.userImage);
             } else {
                 window.location = "../html/login.html";
                 Materialize.toast('Ups something went wrong with your profile!', 4000);
@@ -102,7 +102,7 @@ journeyApp.controller('AllPicturesController', function($scope, $http) {
             if (response.status == 200 && response.data.status == 1) {
                 $('#modal-id').val(response.data.id);
                 $('#modal-comment').text(response.data.comment);
-                $('#modal-image').attr('src', response.data.image);
+                $('#modal-image').attr('src', "../" + response.data.image);
                 if (response.data.favorite == "false") {
                     $('#modal-favorite').text('star_border');
                 } else {
@@ -204,7 +204,7 @@ journeyApp.controller('FavoritesController', function($scope, $http) {
                 console.log(response);
                 $('#modal-id').val(response.data.id);
                 $('#modal-comment').text(response.data.comment);
-                $('#modal-image').attr('src', response.data.image);
+                $('#modal-image').attr('src', "../" + response.data.image);
                 if (response.data.favorite == 0) {
                     $('#modal-favorite').text('star_border');
                 } else {
@@ -253,7 +253,7 @@ journeyApp.controller('AllPlacesController', function($scope, $http) {
     });
 });
 
-journeyApp.controller('NewPictureFormController', function($scope, $http) {
+journeyApp.controller('NewPictureFormController', ['$scope', 'Upload', '$timeout', function($scope, Upload, $timeout) {
     var options = {
         enableHighAccuracy: true
     };
@@ -267,24 +267,53 @@ journeyApp.controller('NewPictureFormController', function($scope, $http) {
         function(error) {
             Materialize.toast('Ups something went wrong! Failed to get location.', 4000);
         }, options);
-    $scope.submit = function() {
-        var request = $http({
-            method: "post",
-            url: "../services.php?action=newJourney",
-            datat: {
-                "lat": "-41.082791",
-                "lng": "8.9823719",
-                "image": "/PATH/TO/IMG",
-                "comment": $("#newPicture-description").val()
-            }
-        });
-        request.then(function successCallback(response) {
-            window.location = '../html/allPictures.html';
-        }, function errorCallback(response) {
-            Materialize.toast('Ups something went wrong! Couldn\'t create picture.', 4000);
-        });
-    }
-});
+
+    $scope.submit = function(file) {
+            file.upload = Upload.upload({
+                url: '../services.php?action=newJourney',
+                method: 'POST',
+                file: file,
+                data: {
+                    lat: $scope.position.lat,
+                    lng: $scope.position.lng,
+                    comment: $('#newPicture-description').val(),
+                }
+            });
+            file.upload.then(function(response) {
+                $timeout(function() {
+                    file.result = response.data;
+                    if (response.data.status == 1) {
+                        window.location = './allPictures.html';
+                    } else {
+                        Materialize.toast('Ups something went wrong! Errormessage: ' + response.data.statusText, 4000);
+                    }
+                });
+            }, function(response) {
+                if (response) {
+                    Materialize.toast('Ups something went wrong!', 4000);
+                }
+            }, function(evt) {
+
+            });
+        }
+        /*$scope.submit = function() {
+            var request = $http({
+                method: "post",
+                url: "../services.php?action=newJourney",
+                datat: {
+                    "lat": "-41.082791",
+                    "lng": "8.9823719",
+                    "image": "/PATH/TO/IMG",
+                    "comment": $("#newPicture-description").val()
+                }
+            });
+            request.then(function successCallback(response) {
+                window.location = '../html/allPictures.html';
+            }, function errorCallback(response) {
+                Materialize.toast('Ups something went wrong! Couldn\'t create picture.', 4000);
+            });
+        }*/
+}]);
 
 function initialize(_lat, _lng, _markers, _zoom = 8) {
     map = null;
