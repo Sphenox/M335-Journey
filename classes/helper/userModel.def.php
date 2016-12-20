@@ -109,7 +109,7 @@ class UserModel {
                 $_SESSION['userId'] = $userId;
                 // Das Profilbild am richtigen Ort abspeichern
                 $fileUpload = new Images();
-                $filePath = $fileUpload->copyImage($_FILES['file'], 'files/user/' . $userId . '-' . $userInput['name']);
+                $filePath = $fileUpload->copyImage($_FILES['file'], 'files/user/' . $userId . '-' . htmlspecialchars($userInput['name']));
                 if ($filePath != false) {
                     // Den Pfad zum Bild in der DB speichern.
                     Database::getDB()->update('users', ['userImage' => $filePath], 'id = ' . $userId);
