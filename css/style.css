@@ -38,3 +38,8 @@
         margin-right: auto;
     }
 }
+
+.background-img {
+    background-image: url(../img/login_background.jpg);
+    background-repeat: no-repeat;
+}

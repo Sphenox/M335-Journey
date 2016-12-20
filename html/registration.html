@@ -24,38 +24,38 @@
     <script type="text/javascript" src="../js/registration.js"></script>
 </head>
 
-<body>
+<body class="background-img">
     <div id="register-form-wrapper" class="row" ng-controller="RegistrationFormController">
         <form id="register-form" class="col s12" ng-submit="submit(picFile)">
-            <h3 class="center-align blue-text">Sign Up</h3>
+            <h3 class="center-align white-text">Sign Up</h3>
             <div class="row">
                 <div class="input-field col s12">
-                    <input id="givenname" type="text" maxlength="50" class="validate" required>
-                    <label for="givenname">Givenname</label>
+                    <input id="givenname" type="text" maxlength="50" class="validate white-text" required>
+                    <label for="givenname" class="white-text">Givenname</label>
                 </div>
             </div>
             <div class="row">
                 <div class="input-field col s12">
-                    <input id="surname" type="text" maxlength="50" class="validate" required>
-                    <label for="surname">Surname</label>
+                    <input id="surname" type="text" maxlength="50" class="validate white-text" required>
+                    <label for="surname" class="white-text">Surname</label>
                 </div>
             </div>
             <div class="row">
                 <div class="input-field col s12">
-                    <input id="email" type="email" maxlength="255" class="validate" required>
-                    <label for="email">Email</label>
+                    <input id="email" type="email" maxlength="255" class="validate white-text" required>
+                    <label for="email" class="white-text">Email</label>
                 </div>
             </div>
             <div class="row">
                 <div class="input-field col s12">
-                    <input id="password" type="password" maxlength="255" class="validate" required>
-                    <label for="password">Password</label>
+                    <input id="password" type="password" maxlength="255" class="validate white-text" required>
+                    <label for="password" class="white-text">Password</label>
                 </div>
             </div>
             <div class="row">
                 <div class="input-field col s12">
-                    <input id="passwordRepeat" type="password" maxlength="255" class="validate" required>
-                    <label for="passwordRepeat">Password repeat</label>
+                    <input id="passwordRepeat" type="password" maxlength="255" class="validate white-text" required>
+                    <label for="passwordRepeat" class="white-text">Password repeat</label>
                 </div>
             </div>
             <div class="row">
@@ -66,7 +66,7 @@
                             <input type="file" ngf-select ng-model="picFile" name="file" accept="image/*" ngf-max-size="10MB">
                         </div>
                         <div class="file-path-wrapper">
-                            <input class="file-path validate" type="text" required>
+                            <input class="file-path validate white-text" type="text" required>
                         </div>
                     </div>
                 </div>
@@ -74,7 +74,7 @@
                     <div class="input-field col s12">
                         <p>
                             <input id="agb" type="checkbox" class="validate" required>
-                            <label for="agb">
+                            <label for="agb" class="white-text">
                                 I have read the terms and conditions and accepts!
                             </label>
                         </p>
