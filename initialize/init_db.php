@@ -1,9 +1,21 @@
 <?php
 
+
+//---------------------------------------
+// HIER DIE DATEN ANPASSEN FALLS NÖTIG
+// Beschreibung der Variablen:
+// $server   -> der Servername, auf welchem die Datenbank läuft standart: localhost
+// $user     -> der Benutzername, mit welchem man Zugriff auf die Datenbank hat standart: root
+// $passwort -> das Passwort für den Benutzer
+// $DBName   -> der Name für die Datenbank standart: journey
+//---------------------------------------
 $server = "localhost";
 $user = "root";
 $password = "";
-
+$DBName = "journey";
+//---------------------------------------
+// ENDE DER ANZUPASSENDEN DATEN
+//---------------------------------------
 
 $db = new mysqli($server, $user, $password);
 
@@ -11,10 +23,10 @@ if ($db->connect_error) {
     die("Connection failed: " . $db->connect_error);
 }
 
-$createDB = "CREATE DATABASE IF NOT EXISTS journey";
+$createDB = "CREATE DATABASE IF NOT EXISTS ".$DBName;
 
 if ($db->query($createDB) === TRUE) {
-    $db->query("USE journey");
+    $db->query("USE ".$DBName);
 
     $DBusers = "CREATE TABLE `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,

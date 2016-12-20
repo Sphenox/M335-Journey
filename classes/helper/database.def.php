@@ -6,16 +6,26 @@
  * Date: 13.12.2016
  * Time: 10:39
  */
-
 class Database {
-
 
     private $mysqliObj; // mysqli object
     // sql connection data
+
+    //---------------------------------------
+    // HIER DIE DATEN ANPASSEN FALLS NÖTIG
+    // Beschreibung der Variablen:
+    // $DBhost     -> der Servername, auf welchem die Datenbank läuft standart: localhost
+    // $DBuser     -> der Benutzername, mit welchem man Zugriff auf die Datenbank hat standart: root
+    // $DBpasswort -> das Passwort für den Benutzer
+    // $DBName     -> der Name für die Datenbank standart: journey
+    //---------------------------------------
     private $DBhost = 'localhost';
     private $DBuser = 'root';
     private $DBpassword = '';
     private $DBname = 'journey';
+    //---------------------------------------
+    // ENDE DER ANZUPASSENDEN DATEN
+    //---------------------------------------
 
     /**
      * Singelton Teil
