@@ -38,7 +38,7 @@ class Controller {
                         break;
                     case 'newJourney':
                         $locModel = new LocationModel();
-                        $this->response = $locModel->newLocation($_POST);
+                        $this->response = $locModel->newLocation($_POST,$userId);
                         break;
                     case 'getFavorites':
                         $fav = new Favorites();

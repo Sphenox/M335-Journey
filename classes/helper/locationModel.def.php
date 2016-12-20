@@ -75,6 +75,9 @@ class LocationModel {
             $dbInsert['lat'] = $userInput['lat'];
             $dbInsert['lng'] = $userInput['lng'];
             $dbInsert['comment'] = $userInput['comment'];
+            if(isset($_SESSION['userId'])){
+                $dbInsert['FKuser'] = intval($_SESSION['userId']);
+            }
             $dbReturn = Database::getDB()->insert('locations', $dbInsert);
             if ($dbReturn) {
                 $locId = Database::getDB()->getLastInsertId();
