@@ -26,9 +26,36 @@ class LocationModel {
         return $locations;
     }
 
+    public function getAllVisibleLocations($userId){
+        $result = Database::getDB()->query('CALL getAllVisibleLocation('.$userId.')');
+        $locations = [];
+        foreach ($result as $location) {
+            $locationObj = new Location();
+            foreach ($location as $field => $data) {
+                $locationObj->$field = $data;
+                $locationObj->favorite = Favorites::isFavorite($userId, $location['id']);
+            }
+            $locations[]= $locationObj;
+        }
+        return $locations;
+    }
+
     public function callGetLocations($userId) {
         if ($userId != false) {
             $response['uploads'] = $this->getLocationsFromUser($userId);
+            $response['status'] = '1';
+            $response['statusText'] = '';
+        }
+        else {
+            $response['status'] = '0';
+            $response['statusText'] = 'User id is not set.';
+        }
+        return $response;
+    }
+
+    public function callGetAllLocations($userId) {
+        if ($userId != false) {
+            $response['uploads'] = $this->getAllVisibleLocations($userId);
             $response['status'] = '1';
             $response['statusText'] = '';
         }
