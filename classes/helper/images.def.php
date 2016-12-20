@@ -8,12 +8,15 @@
  */
 class Images {
 
+    const validMimeTypes = ['image/gif', 'image/jpeg', 'image/png'];
+
     public function copyImage($file, $newPath) {
-        if(isset($file['tmp_name']) && isset($file['name'])){
+        if (isset($file['tmp_name']) && isset($file['name'])) {
             $tmpPath = $file['tmp_name'];
-            if(file_exists($tmpPath)){
+            $fileType = $this->getImgType($file['name'], $tmpPath);
+            if (file_exists($tmpPath) && $fileType !== false) {
                 // Den File-Typ noch auslesen
-                $newPath = $newPath.'.'.$this->getImgType($file['name']);
+                $newPath = $newPath . '.' . $fileType;
                 copy($tmpPath, $newPath);
                 return $newPath;
             }
@@ -22,7 +25,15 @@ class Images {
     }
 
 
-    public function getImgType($fileName) {
-        return pathinfo($fileName,PATHINFO_EXTENSION);
+    public function getImgType($fileName, $tmpPath) {
+        $mimeType = mime_content_type($tmpPath);
+        if (in_array($mimeType, self::validMimeTypes)){
+            return pathinfo($fileName, PATHINFO_EXTENSION);
+        }
+        else {
+            return false;
+        }
     }
+
+
 }
