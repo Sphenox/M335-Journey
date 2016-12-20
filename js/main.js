@@ -57,7 +57,7 @@ journeyApp.controller('MenuController', function($scope, $http) {
 });
 
 journeyApp.controller('AllPicturesController', function($scope, $http) {
-    $http.get('../services.php?action=getJourneys').then(function(response) {
+    $http.get('../services.php?action=getAllJourneys').then(function(response) {
         if (response.data.status == 1) {
             $scope.uploads = response.data.uploads;
         } else {
