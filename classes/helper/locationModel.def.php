@@ -82,10 +82,10 @@ class LocationModel {
             if ($dbReturn) {
                 $locId = Database::getDB()->getLastInsertId();
                 $fileUpload = new Images();
-                $filePath = $fileUpload->copyImage($_FILES['file'], 'files/location/');
+                $filePath = $fileUpload->copyImage($_FILES['file'], 'files/location/'.$locId);
                 if ($filePath != false) {
                     // Den Pfad in der DB speichern
-                    Database::getDB()->update('users', ['userImage' => $filePath], 'id = ' . $locId);
+                    Database::getDB()->update('locations', ['image' => $filePath], 'id = ' . $locId);
                     $response['status'] = '1';
                     $response['statusText'] = 'Journey is successfully created.';
                 }
