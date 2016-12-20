@@ -103,7 +103,7 @@ class UserModel {
             $dbInsert['email'] = $userInput['email'];
             $dbInsert['name'] = $userInput['name'];
             $dbInsert['prename'] = $userInput['prename'];
-            $dbReturn = Database::getDB()->insert('users', $dbInset);
+            $dbReturn = Database::getDB()->insert('users', $dbInsert);
             if ($dbReturn) {
                 $userId = Database::getDB()->getLastInsertId();
                 $_SESSION['userId'] = $userId;
