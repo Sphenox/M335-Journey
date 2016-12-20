@@ -1,8 +1,8 @@
 <?php
 
 /**
- * Created by PhpStorm.
- * User: Anwender
+ * Die Klasse welche das ganze Handlich der Friends macht (Friends können leider noch nicht erfasst werden)
+ * User: Tim Pfister
  * Date: 16.12.2016
  * Time: 08:58
  */
@@ -10,11 +10,11 @@
 class Friends {
 
     /**
-     * @param $id
+     * @param $userId
      * @return array
      */
-    public static function getFriendsFromID($id) {
-        $result = Database::getDB()->query('CALL friendsList('.$id.')');
+    public static function getFriendsFromID($userId) {
+        $result = Database::getDB()->query('CALL friendsList('.$userId.')');
         $friendList = [];
         foreach($result as $friend) {
             $user = new User();

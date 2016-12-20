@@ -44,6 +44,9 @@ class Database {
         }
     }
 
+    /**
+     * Destructor, damit die DB-Connection auch wieder geschlossen wird.
+     */
     public function __destruct() {
         $this->mysqliObj->close();
     }
@@ -129,10 +132,17 @@ class Database {
         return false;
     }
 
+    /**
+     * @return mixed
+     */
     public function getLastInsertId() {
         return $this->mysqliObj->insert_id;
     }
 
+    /**
+     * @param $toEscape
+     * @return string
+     */
     public function escape($toEscape) {
         return $this->mysqliObj->escape_string($toEscape);
     }

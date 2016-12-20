@@ -1,13 +1,17 @@
 <?php
 /**
- *
- * User: Anwender
+ * Die Klasse, welche das ganze Handling der Favoriten macht
+ * User: Tim Pfister
  * Date: 13.12.2016
  * Time: 11:32
  */
 class Favorites {
 
-    public static function getFavoritesFromId($userId) {
+    /**
+     * @param $userId
+     * @return array
+     */
+    public function getFavoritesFromId($userId) {
         $result = Database::getDB()->query('CALL favoritesList(' . $userId . ')');
         $favoritesList = [];
         foreach ($result as $favorite) {
@@ -98,9 +102,13 @@ class Favorites {
         return $response;
     }
 
+    /**
+     * @param $userId
+     * @return mixed
+     */
     public function callGetFavorites($userId) {
         if ($userId !== false) {
-            $response['uploads'] = self::getFavoritesFromId($userId);
+            $response['uploads'] = $this->getFavoritesFromId($userId);
             $response['status'] = '1';
             $response['statusText'] = '';
         }

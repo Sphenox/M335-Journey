@@ -1,11 +1,16 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: Anwender
+ * Der Autoloader für die Klassen
+ * User: Tim Pfister
  * Date: 19.12.2016
  * Time: 14:12
  */
 
+/**
+ * AUTOLOADER FUNKTION
+ * @param $class
+ * @return bool
+ */
 function my_autoloader($class) {
     $filename = lcfirst($class).'.def.php';
     $file = 'classes/defines/'.$filename;

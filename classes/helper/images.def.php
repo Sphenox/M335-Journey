@@ -1,8 +1,8 @@
 <?php
 
 /**
- * Created by PhpStorm.
- * User: Anwender
+ * Handelt den FileUpload
+ * User: Tim Pfister
  * Date: 19.12.2016
  * Time: 15:55
  */
@@ -25,7 +25,7 @@ class Images {
     }
 
 
-    public function getImgType($fileName, $tmpPath) {
+    private function getImgType($fileName, $tmpPath) {
         $mimeType = mime_content_type($tmpPath);
         if (in_array($mimeType, self::validMimeTypes)){
             return pathinfo($fileName, PATHINFO_EXTENSION);

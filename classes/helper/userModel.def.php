@@ -1,8 +1,8 @@
 <?php
 
 /**
- * Created by PhpStorm.
- * User: Anwender
+ * Diese Klasse ist hier für alles was mit dem User zu tun hat. Registrieren / Login und Darstellen des users
+ * User: Tim Pfister
  * Date: 13.12.2016
  * Time: 13:14
  */
@@ -50,13 +50,13 @@ class UserModel {
     }
 
     /**
-     * @param $id
+     * @param $userId
      * @return User | bool
      */
-    protected function readUserOnly($id) {
+    protected function readUserOnly($userId) {
         $user = new User();
         //TODO: PROCEDURE einbauen
-        $result = Database::getDB()->query('SELECT * FROM users WHERE id = ' . $id);
+        $result = Database::getDB()->query('SELECT * FROM users WHERE id = ' . $userId);
         if (!empty($result) && is_array($result)) {
             foreach ($result[0] as $field => $data) {
                 $user->$field = $data;
@@ -64,7 +64,7 @@ class UserModel {
         }
         else {
             $this->user['status'] = '0';
-            $this->user['statusText'] = 'User with ID:' . $id . ' was not found.';
+            $this->user['statusText'] = 'User with ID:' . $userId . ' was not found.';
             return false;
         }
 
@@ -72,15 +72,16 @@ class UserModel {
     }
 
     /**
-     * @param $id
+     * @param $userId
      */
-    public function readFullUser($id) {
-        $user = $this->readUserOnly($id);
+    public function readFullUser($userId) {
+        $user = $this->readUserOnly($userId);
         if ($user !== false) {
             $locModel = new LocationModel();
-            $user->journeys = $locModel->getLocationsFromUser($id);
-            $user->friends = Friends::getFriendsFromID($id);
-            $user->favorites = Favorites::getFavoritesFromId($id);
+            $user->journeys = $locModel->getLocationsFromUser($userId);
+            $user->friends = Friends::getFriendsFromID($userId);
+            $favorites = new Favorites();
+            $user->favorites = $favorites->getFavoritesFromId($userId);
             $this->user = get_object_vars($user);
             $this->user['status'] = '1';
             $this->user['statusText'] = '';

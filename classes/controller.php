@@ -8,9 +8,12 @@
  */
 class Controller {
 
-    private $model;
     private $response;
 
+    /**
+     * Controller constructor.
+     * @param $GET
+     */
     public function __construct($GET) {
         session_start();
         if (isset($GET['action'])) {
@@ -84,6 +87,9 @@ class Controller {
 
     }
 
+    /**
+     * @return string
+     */
     public function display() {
 
         return json_encode($this->response);

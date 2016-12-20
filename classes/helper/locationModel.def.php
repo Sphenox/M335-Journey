@@ -1,8 +1,8 @@
 <?php
 
 /**
- * Created by PhpStorm.
- * User: Anwender
+ * Klasse welche das Erfassen und ausgeben von den Location/Journeys handelt.
+ * User: Tim Pfister
  * Date: 13.12.2016
  * Time: 14:09
  */
@@ -26,7 +26,7 @@ class LocationModel {
         return $locations;
     }
 
-    public function getAllVisibleLocations($userId) {
+    private function getAllVisibleLocations($userId) {
         $result = Database::getDB()->query('CALL getAllVisibleLocation(' . $userId . ')');
         $locations = [];
         foreach ($result as $location) {
