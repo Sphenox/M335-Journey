@@ -53,9 +53,9 @@ class LocationModel {
         return $response;
     }
 
-    public function callGetAllLocations($userId) {
-        if ($userId != false) {
-            $response['uploads'] = $this->getAllVisibleLocations($userId);
+    public function callGetAllLocations() {
+        if (isset($_SESSION['userId'])) {
+            $response['uploads'] = $this->getAllVisibleLocations($_SESSION['userId']);
             $response['status'] = '1';
             $response['statusText'] = '';
         }
@@ -74,7 +74,12 @@ class LocationModel {
             if ($result != false) {
                 foreach ($result[0] as $field => $data) {
                     $locationObj->$field = $data;
-                    $locationObj->favorite = Favorites::isFavorite($result[0]['FKuser'], $result[0]['id']);
+                    if(isset($_SESSION['userId'])) {
+                        $locationObj->favorite = Favorites::isFavorite($_SESSION['userId'], $result[0]['id']);
+                    }
+                    else {
+                        $locationObj->favorite = false;
+                    }
                 }
                 $response = $locationObj;
                 $response->status = '1';

@@ -38,7 +38,7 @@ class Controller {
                         break;
                     case 'getAllJourneys':
                         $locModel = new LocationModel();
-                        $this->response = $locModel->callGetAllLocations($userId);
+                        $this->response = $locModel->callGetAllLocations();
                         break;
                     case 'newJourney':
                         $locModel = new LocationModel();
