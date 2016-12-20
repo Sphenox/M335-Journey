@@ -2,6 +2,10 @@ var journeyApp = new angular.module('journeyApp', ['ngFileUpload']);
 
 journeyApp.controller('RegistrationFormController', ['$scope', 'Upload', '$timeout', function($scope, Upload, $timeout) {
     $scope.submit = function(file) {
+        if ($("#password").val() != $("#passwordRepeat").val()) {
+            Materialize.toast('The password does not match.', 4000);
+            return false;
+        }
         file.upload = Upload.upload({
             url: '../services.php?action=registration',
             method: 'POST',
